@@ -51,3 +51,6 @@ coverage/
 temp/
 tmp/
 *.swp
+
+# Environment Variables
+.Renviron

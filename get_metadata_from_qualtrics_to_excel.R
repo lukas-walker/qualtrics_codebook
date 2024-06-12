@@ -26,6 +26,13 @@
 
 require(pacman)
 
+# Read environment file
+# You have to create this in your local folder.
+# It should contain your folder path, API key, survey id, etc.
+# Also see Readme
+readRenviron("./.Renviron")
+
+
 # LOAD PACKAGES
 
 p_load(httr,tidyverse,here,openxlsx,rlist)
@@ -33,15 +40,9 @@ p_load(httr,tidyverse,here,openxlsx,rlist)
 
 # CUSTOM VARIABLES AND PATHS
 
-I_HAVE_SET_THE_WORKING_DIRECTORY = FALSE
-
-if (!I_HAVE_SET_THE_WORKING_DIRECTORY) {
-  stop("Please set the working directory correctly")
-}
-
-# This should contain the network location of your share
-SHARE_WINDOWS <- ""
-SHARE_MAC <- ""
+# This should contain the network location of your share (Create a file called .Renviron and write API_KEY="YOUR_API_KEY" ...)
+SHARE_WINDOWS <- Sys.getenv("SHARE_WINDOWS")
+SHARE_MAC <- Sys.getenv("SHARE_MAC")
 
 # This is the path to your codebook folder (usually where this file is) on your share
 WORKING_DIRECTORY <- "/qualtrics_codebook"
@@ -73,10 +74,10 @@ USING_QUESTION_PREFIX = FALSE
 BASE_URL = "https://descil.eu.qualtrics.com/API/v3/survey-definitions/"
 
 # you can find this token in the survey settings
-QUALTRICS_API_TOKEN = "API_KEY"
+QUALTRICS_API_TOKEN = Sys.getenv("API_KEY")
 
 # you can find this ID in the survey link when you publish it
-QUALTRICS_SURVEY_ID = "SURVEY_ID"
+QUALTRICS_SURVEY_ID = Sys.getenv("SURVEY_ID")
 
 # This code needs to match the language settings in the qualtrics survey
 TRANSLATION_LANGUAGE_CODE = "EN"
@@ -114,10 +115,10 @@ NOT_MARKED_TEXT_TRANSLATED = "Not Selected"
 
 if (Sys.info()["sysname"] == "Windows") {
   #windows
-  #setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
+  setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
 } else {
   #mac
-  #setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
+  setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
 }
 
 # ACCESS QUALTRICS API TO RECEIVE METADATA

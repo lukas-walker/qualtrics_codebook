@@ -41,17 +41,17 @@ p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr)
 ```
 
 ```{r, include = FALSE}
+# Read environment file
+# You have to create this in your local folder.
+# It should contain your folder path, API key, survey id, etc.
+# Also see Readme
+readRenviron("./.Renviron")
+
 # CUSTOM VARIABLES AND PATHS
 
-I_HAVE_SET_THE_WORKING_DIRECTORY = FALSE
-
-if (!I_HAVE_SET_THE_WORKING_DIRECTORY) {
-  stop("Please set the working directory correctly")
-}
-
 # This should contain the network location of your share
-SHARE_WINDOWS <- ""
-SHARE_MAC <- ""
+SHARE_WINDOWS <- Sys.getenv("SHARE_WINDOWS")
+SHARE_MAC <- Sys.getenv("SHARE_MAC")
 
 # This is the path to your codebook folder (usually where this file is) on your share
 WORKING_DIRECTORY <- "/qualtrics_codebook"
@@ -66,10 +66,10 @@ WAVE_PREFIX = "wave1_"
 # set working directory  
 if (Sys.info()["sysname"] == "Windows") {
   #windows
-  #setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
+  setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
 } else {
   #mac
-  #setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
+  setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
 }
 ```
 
