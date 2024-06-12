@@ -1,0 +1,355 @@
+---
+geometry: "left=2.5cm,right=2.5cm,top=3cm,bottom=3cm"
+header-includes:
+- \usepackage[labelformat=empty]{caption}
+- \usepackage[utf8]{inputenc}
+- \usepackage{placeins}
+- \usepackage{array}
+- \usepackage{float}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \usepackage{graphicx}
+- \usepackage{hyperref}
+- \usepackage[ddmmyyyy]{datetime}
+- \usepackage{booktabs} 
+- \fancyhf{}
+- \fancyhead[C]{\nouppercase{\leftmark}}
+- \fancyfoot[C]{\thepage}
+- \fancyhead[L]{\includegraphics[height=5mm]{img/logo1}}
+- \fancyhead[R]{\includegraphics[height=5mm]{img/logo2.png}}
+- \renewcommand{\headrulewidth}{0.3pt}
+- \setlength{\headsep}{0.6in} 
+output:
+  pdf_document:
+    includes: 
+      before_body: frontpage.tex
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    df_print: paged
+fontsize: 12
+linkcolor: blue
+---
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+require(pacman)
+
+p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr)
+```
+
+```{r, include = FALSE}
+# CUSTOM VARIABLES AND PATHS
+
+I_HAVE_SET_THE_WORKING_DIRECTORY = FALSE
+
+if (!I_HAVE_SET_THE_WORKING_DIRECTORY) {
+  stop("Please set the working directory correctly")
+}
+
+# This should contain the network location of your share
+SHARE_WINDOWS <- ""
+SHARE_MAC <- ""
+
+# This is the path to your codebook folder (usually where this file is) on your share
+WORKING_DIRECTORY <- "/qualtrics_codebook"
+
+# This is the output name for the excel file
+CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
+
+WAVE_PREFIX = "wave1_"
+```
+
+```{r, include=FALSE}
+# set working directory  
+if (Sys.info()["sysname"] == "Windows") {
+  #windows
+  #setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
+} else {
+  #mac
+  #setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
+}
+```
+
+```{r, include=FALSE}
+
+# Excel Table into R
+df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
+
+# has to be defined for irpanels package to work (should be DE and EN)
+languages <- c("DE", "EN")
+
+```
+
+```{r global_options, echo=FALSE}
+knitr::opts_chunk$set(options(
+  # Leave empty space in table if NA
+  knitr.kable.NA = " "),
+  # Not displaying anything except output
+  echo=FALSE,
+  warning=FALSE,
+  message=FALSE, 
+  # Display tables (and not latex code)
+  results = 'asis', 
+  # Setting for summary stats 
+  fig.width = 10, 
+  fig.height = 4)
+```
+
+
+```{r indexing metadata info, echo=FALSE}
+# THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
+
+# General variable information (e.g., question type, instruction text)
+meta = 1:14
+
+# German value labels (including -8 and -9)
+codes_de = 15:20
+
+# English value labels (including -8 (EN) and -9 (EN))
+codes_en = 21:26
+
+# Missing labels
+miscodes = 27:35
+```
+
+\newpage
+
+# Labelling Scheme 
+The coding of variable labels follows a uniform scheme. The first two digits denote the wave. For example, for all variables gathered in the first wave, every variable starts with the two identical digits w1_\*, accordingly with w12_\* for the eleventh wave.
+
+The subsequent digits indicate the number of the question, equivalent to its position in the questionnaire. For example, w10_q4 denotes Question 4 of the Wave 10 questionnaire. A similar labeling applies to treatment variables or meta data variables. When the order of questions was randomized for respondents, this is mentioned explicitly.
+
+The last few digits determine the position of an item or answer option in case of an item battery or multiple-answer question. For example, questions might allow multiple answers coded as binary variables for the respective answer choice. Likewise, there are many matrix questions that comprise several items. For example, w12_q5x3 would denote Item 3 from Question 5 in Wave 12. When the order of items was randomized for respondents, this is mentioned explicitly.
+
+# Missing Code Scheme
+If applicable, missing values are coded as follows: 
+
+```{r,  include=TRUE, results="asis"}
+
+#missing labels 
+#upanel.meta[c(31, 30, 13:20)] %>%
+#    kable("latex", col.names = NULL, booktabs = T, linesep = "") %>% 
+#    kable_styling(latex_options = c("striped", "hold_position" )) %>% 
+#    column_spec(2, width = "35em")
+
+cb_mistable(metadata = df_meta)
+```
+
+
+# Presentation of randomisation
+This wave included survey experiments. Randomly defined groups received different treatments in form of information and question texts. The treatment variables display the exact information and question texts for each group. If the treatment concerns the question text of a variable, the different versions will be presented along with the corresponding variable. The following scheme is used to present the different treatments (see [Question 40](#q40) as an example): 
+
++ {...} indicates all treatment values belonging to one treatment variable, 
++ [...] indicates one treatment value within a treatment variable,
++ // delimits the different treatment values and can be interpreted as an exclusive OR. <p>
+
+The control group often receives no information or a shortened question text (without additional information). The absence of an information or text is indicated with an empty field. Control group information are either recorded by a general treatment group variable or a specific treatment variable referring to the information/text. In the latter case, [ ] is used to refer to the (empty) control group value. Otherwise, { } indicates the (empty) control group value.  
+
+# Question Types 
+
+The given question types explain the way respondents were allowed to answer a specific question. This is, either selecting a limited (single choice) or open (multiple choice) number of response options from a given list, inserting text or numeric values in open text boxes, or showing one’s opinion via rating on a predefined continuum. The question type meta data does not result from respondents' answers, but records basic information on individual survey rounds and respondents.
+
+\newpage
+```{r}
+# FUNCTIONS
+
+# this function receives a list indices of rows of special kind
+# e.g. rows that contain intros for questions
+print_intro_rows <- function(rows_of_current_special_rows){
+  if (length(rows_of_current_special_rows) == 0) return()
+
+  if (length(rows_of_current_special_rows) == 1) rows_of_current_special_rows = c(rows_of_current_special_rows)
+ 
+  # go through list of special rows and handle them one by one
+  for (i in 1:length(rows_of_current_special_rows)) {
+    # if the row is an intro row, print the intro
+    if (grepl("intro", df_meta[["Variable name"]][rows_of_current_special_rows[i]])) {
+      # THIS IS AN INTRO ROW
+      cat(paste0(df_meta[["Question text (EN)"]][rows_of_current_special_rows[i]], "\n\n"))
+    }
+  }
+}
+
+
+# e.g. rows that contain intros for questions
+# this is intended for pages that belong to a question but only describe the open text box option of the question
+print_text_box_pages <- function(rows_of_current_special_rows){
+  if (length(rows_of_current_special_rows) == 0) return()
+
+  if (length(rows_of_current_special_rows) == 1) rows_of_current_special_rows = c(rows_of_current_special_rows)
+ 
+  # go through list of special rows and handle them one by one
+  for (i in 1:length(rows_of_current_special_rows)) {
+    # if the row is an text box row, print the page
+    if (grepl("_txt", df_meta[["Variable name"]][rows_of_current_special_rows[i]])) {
+      # THIS IS A TEXT BOX QUESTION ROW
+      
+      cb_page(metadata = df_meta, num.var = row_of_single_page_question)
+    }
+  }
+}
+
+# assumes row_index exists in df
+# n is the number of replicas the new df should contain
+replicate_rows <- function(df, row_index, n) {
+  row_to_replicate <- df[row_index, , drop = FALSE] # drop = FALSE to keep it as a data frame
+
+  # Replicate the row n times
+  replicated_rows <- do.call(rbind, replicate(n, row_to_replicate, simplify = FALSE))
+  
+  # Combine everything and return
+  return(df <- rbind(df[1:(row_index-1), ], replicated_rows, df[(row_index+1):nrow(df), ]))
+}
+
+
+```
+
+
+
+```{r}
+# Assumtions:
+# - Each question appears as a block of rows. (i.e. questions are not mixed between rows)
+# - The Variable name is unique
+# - intro rows are before the question to which they belong
+
+
+# INSERT PAGES
+current_row = 1
+current_question = 1
+current_chapter = 1 # contains row of question where this chapter begins
+
+# iterate through all rows until the end of the metadata dataframe
+# prints all pages for each question
+while (current_row <= nrow(df_meta)) {
+  if (df_meta$Chapter[current_chapter] != df_meta$Chapter[current_row] || current_row == 1) {
+    # NEW CHAPTER REACHED
+    current_chapter = current_row
+    
+    # PRINT CHAPTER
+    cat(paste0("# ", df_meta$Chapter[current_chapter], "\n\n"))
+  }
+  
+  # get question name identifier (e.g. "w12_q3x1")
+  row_identifier = df_meta[["Variable name"]][current_row]
+  
+  # get question number (e.g. "3")
+  question_number = str_extract(gsub(paste0(WAVE_PREFIX, "q"), "", row_identifier), "^[0-9]+")
+  
+  # HANDLE SPECIAL CASES (where there is no question number)
+  if (is.na(question_number)) {
+    if (is.na(df_meta[current_row, ]$`Title`)
+        || 
+        df_meta[current_row, ]$`Title` == " ") {
+      cat(paste0("## ", df_meta[current_row, ]$`Variable name`,"\n\n"))
+    } else {
+      cat(paste0("## ", df_meta[current_row, ]$`Title`,"\n\n"))
+    }
+    
+    cb_pages(metadata = df_meta, multi.var = c(current_row), comment = if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "")
+    
+    # go to next question
+    current_row = current_row + 1
+    next
+  } 
+  
+  # HANDLE REGULAR CASES (NORMAL QUESTION )
+  else  {
+    
+    if (current_question != question_number || current_row == 1) {
+      # PRINT TITLE
+      # print the title for this page or these pages if there are multiple subquestions
+      cat(paste0("## Question ", question_number,": ",df_meta[current_row, ]$`Title`,"\n\n"))
+      
+      current_question = question_number
+    }
+    
+    # if it's just an intro text, just print the german and english version
+    if (any(grepl(paste0("^.+_intro$"), row_identifier))) {
+      cat("DE: ")
+      cat(df_meta[current_row, ]$`Question text`)
+      cat("\n\n")
+      cat("EN: ")
+      cat(df_meta[current_row, ]$`Question text (EN)`)
+      cat("\n\n")
+      
+      # go to next question
+      current_row = current_row + 1
+      next
+    }
+    
+    # check if current row is a regular question that can just be printed
+    if ( 
+      any(grepl(paste0("^", WAVE_PREFIX, "q", question_number, "(_txt)?$"), row_identifier)) # single page question (possibly with text box)
+      ||
+      any(grepl(paste0("^", WAVE_PREFIX, "q", question_number, "x", "[0-9]+(_txt)?$"), row_identifier)) # multi page question (possibly with text box)
+    ) {
+      
+      if (any(grepl(paste0("^", WAVE_PREFIX, "q", question_number, "$"), row_identifier))
+          &&
+          !is.na(df_meta[current_row, ]$`Question type`)
+          &&
+          df_meta[current_row, ]$`Question type` == "Multiple Choice") {
+        # single page question is MULTIPLE CHOICE
+        # --> this question has to be expanded
+
+        # get number of choices including -8
+        n = length(c(codes_de[!is.na(df_meta[current_row, codes_de])]))
+
+        df_meta <- replicate_rows(df = df_meta, row_index = current_row, n = n)
+
+        # all without -8
+        for (i in 0:(n-2)) {
+          df_meta[current_row+i,]$`Item text` = df_meta[[current_row+i,codes_de[2]+i]] # value for 1 to last posittive german labels
+          df_meta[current_row+i,]$`Item text (EN)` = df_meta[[current_row+i,codes_en[2]+i]] # value for 1 to last posittive english labels
+        }
+        df_meta[current_row+n-1,]$`Item text` = df_meta[[current_row+i,codes_de[length(codes_de)-1]]] # value for -8
+        df_meta[current_row+n-1,]$`Item text (EN)` = df_meta[[current_row+i,codes_en[length(codes_en)-1]]] # value for -8
+
+        for (i in 0:(n-1)) {
+          for (j in codes_de) {
+            df_meta[current_row+i,j] = NA
+          }
+          for (j in codes_en) {
+            df_meta[current_row+i,j] = NA
+          }
+          df_meta[current_row+i,codes_de[1]] = "Micht Markiert" # value for 0
+          df_meta[current_row+i,codes_de[2]] = "Markiert" # value for 0
+          df_meta[current_row+i,codes_en[1]] = "Not Selected" # value for 0
+          df_meta[current_row+i,codes_en[2]] = "Selected" # value for 0
+
+          df_meta[current_row+i,]$`Variable name` = paste0(df_meta[current_row+i,]$`Variable name`, "x", (i+1))
+          df_meta[current_row+i,]$`Question type` = "Single Choice"
+        }
+      }
+      
+      
+      cb_pages(metadata = df_meta, multi.var = c(current_row), comment = if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "")
+    }
+    
+    # go to next question
+    current_row = current_row + 1
+    next
+  }
+  
+  
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
