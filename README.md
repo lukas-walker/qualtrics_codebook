@@ -33,13 +33,15 @@ WORKING_DIRECTORY=""
 LANGUAGE_CODE=""
 
 ### get_metadata_from_qualtrics_to_excel.R
-#### Go through first part of the file and adapt everything that needs to be adapted. The comments will guide you. 
-#### Run the file
+Go through first part of the file and adapt everything that needs to be adapted. The comments will guide you. 
+Run the file
 
 ### Update the Excel that was created
 Edit Chapters and titles
 Reorganize variables according to your needs
 Delete empty columns that might appear
+
+### Adapt frontpage.tex
 
 ### assemble_codebook_from_excel.Rmd
 Knit this R markdown to PDF
