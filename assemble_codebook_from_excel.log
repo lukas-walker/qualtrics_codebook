@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.12)  12 JUN 2024 10:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.6.12)  17 JUN 2024 09:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -538,7 +538,7 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 LaTeX Warning: Unused global option(s):
     [12].
 
-(./assemble_codebook_from_excel.aux)
+No file assemble_codebook_from_excel.aux.
 \openout1 = `assemble_codebook_from_excel.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 108.
@@ -637,59 +637,8 @@ Package pdftex.def Info: img/logo3.png  used on input line 155.
 
 [1
 
-{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc} <./img/logo1.png (PNG copy)> <./img/logo2.png (PNG copy)> <./img/logo3.png (PNG copy)>] (./assemble_codebook_from_excel.toc
-LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
-File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
-File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
-File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
-File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 6.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 6.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 6.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 6.
-(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 34.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 34.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.34 ...n}{matrix\_frage\_textx1}{18}{section*.36}
-                                                  % [1])
+{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc} <./img/logo1.png (PNG copy)> <./img/logo2.png (PNG copy)> <./img/logo3.png (PNG copy)>]
+No file assemble_codebook_from_excel.toc.
 \tf@toc=\write3
 \openout3 = `assemble_codebook_from_excel.toc'.
 
@@ -710,9 +659,44 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
 
-[2]
 
-LaTeX Warning: Hyper reference `q40' on page 3 undefined on input line 218.
+pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.164 \newpage
+               [1]
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 193.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 193.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 193.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 193.
+(c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+LaTeX Warning: Hyper reference `q40' on page 2 undefined on input line 218.
 
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 223.
 (c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
@@ -734,7 +718,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
 
-[3{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
+[2{c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
@@ -751,351 +735,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
 
-[4]
+[3]
 
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 299.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 299.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
+! LaTeX Error: Unicode character ই (U+0987)
+               not set up for use with LaTeX.
 
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[5]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 343.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 343.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[6]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 387.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 387.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[7]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 431.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 431.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[8]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 475.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 475.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[9]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 520.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 520.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[10]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 568.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 568.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[11]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 604.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 604.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[12]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 640.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 640.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[13]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 676.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 676.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[14]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 724.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 724.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[15]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 770.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 770.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[16]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 816.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 816.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[17]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 862.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 862.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[18]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 908.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 908.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[19]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 954.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 954.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[20]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 1000.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 1000.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[21]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 1036.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 1036.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[22]
-
-File: img/logo1.png Graphic file (type png)
-<use img/logo1.png>
-Package pdftex.def Info: img/logo1.png  used on input line 1080.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-File: img/logo2.png Graphic file (type png)
-<use img/logo2.png>
-Package pdftex.def Info: img/logo2.png  used on input line 1080.
-(pdftex.def)             Requested size: 86.45523pt x 14.22624pt.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 17.82628pt, for example:
-(fancyhdr)                \setlength{\headheight}{17.82628pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
-
-[23] (./assemble_codebook_from_excel.aux)
- ***********
-LaTeX2e <2024-06-01>
-L3 programming layer <2024-05-27>
- ***********
-
-LaTeX Warning: There were undefined references.
-
- ) 
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.272 Question text (BN) & ই
+                              ন্টারভিউ যে নিচ্�... 
 Here is how much of TeX's memory you used:
- 15997 strings out of 475560
- 256507 string characters out of 5776370
- 1942894 words of memory out of 5000000
- 38246 multiletter control sequences out of 15000+600000
+ 15809 strings out of 475560
+ 254638 string characters out of 5776370
+ 1939894 words of memory out of 5000000
+ 38142 multiletter control sequences out of 15000+600000
  612883 words of font info for 68 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 75i,16n,80p,1031b,521s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx10.pfb><c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmcsc10.pfb><c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr10.pfb><c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/lukas/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb>
-Output written on assemble_codebook_from_excel.pdf (24 pages, 248566 bytes).
-PDF statistics:
- 409 PDF objects out of 1000 (max. 8388607)
- 363 compressed objects within 4 object streams
- 89 named destinations out of 1000 (max. 500000)
- 368 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 75i,15n,80p,1031b,519s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
+!  ==> Fatal error occurred, no output PDF file produced!
