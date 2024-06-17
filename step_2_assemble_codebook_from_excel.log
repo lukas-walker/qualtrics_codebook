@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.6.17)  17 JUN 2024 17:31
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.6.17)  17 JUN 2024 18:43
  restricted system commands enabled.
 **step_2_assemble_codebook_from_excel.tex
 (./step_2_assemble_codebook_from_excel.tex
@@ -1158,17 +1158,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 warning  (pdf backend): ignoring duplicate destination with the name 'page.1'
 [1]
 
-LaTeX Warning: Hyper reference `q40' on page 2 undefined on input line 224.
+LaTeX Warning: Hyper reference `q40' on page 2 undefined on input line 226.
 
 
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 256.
+Package luatex.def Info: img/logo1.png  used on input line 258.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 256.
+Package luatex.def Info: img/logo2.png  used on input line 258.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1181,11 +1181,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 257.
+Package luatex.def Info: img/logo1.png  used on input line 259.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 257.
+Package luatex.def Info: img/logo2.png  used on input line 259.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1196,18 +1196,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [3]
 LaTeX Font Info:    Font shape `TU/NotoSerifBengali(2)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 261.
+(Font)              scaled to size 12.0pt on input line 263.
 LaTeX Font Info:    Font shape `TU/NotoSerifBengali(2)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 261.
-
-
+(Font)              scaled to size 12.0pt on input line 263.
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 310.
+Package luatex.def Info: img/logo1.png  used on input line 334.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 310.
+Package luatex.def Info: img/logo2.png  used on input line 334.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1220,11 +1218,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 346.
+Package luatex.def Info: img/logo1.png  used on input line 339.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 346.
+Package luatex.def Info: img/logo2.png  used on input line 339.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1237,11 +1235,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 390.
+Package luatex.def Info: img/logo1.png  used on input line 369.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 390.
+Package luatex.def Info: img/logo2.png  used on input line 369.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1254,11 +1252,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 426.
+Package luatex.def Info: img/logo1.png  used on input line 405.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 426.
+Package luatex.def Info: img/logo2.png  used on input line 405.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1271,11 +1269,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 File: img/logo1.png Graphic file (type png)
 <use img/logo1.png>
-Package luatex.def Info: img/logo1.png  used on input line 468.
+Package luatex.def Info: img/logo1.png  used on input line 435.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 File: img/logo2.png Graphic file (type png)
 <use img/logo2.png>
-Package luatex.def Info: img/logo2.png  used on input line 468.
+Package luatex.def Info: img/logo2.png  used on input line 435.
 (luatex.def)             Requested size: 86.45523pt x 14.22624pt.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1284,7 +1282,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
 
-[8] (./step_2_assemble_codebook_from_excel.aux)
+[8]
+
+File: img/logo1.png Graphic file (type png)
+<use img/logo1.png>
+Package luatex.def Info: img/logo1.png  used on input line 469.
+(luatex.def)             Requested size: 86.45523pt x 14.22624pt.
+File: img/logo2.png Graphic file (type png)
+<use img/logo2.png>
+Package luatex.def Info: img/logo2.png  used on input line 469.
+(luatex.def)             Requested size: 86.45523pt x 14.22624pt.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 17.82628pt, for example:
+(fancyhdr)                \setlength{\headheight}{17.82628pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-5.82628pt}.
+
+[9] (./step_2_assemble_codebook_from_excel.aux)
  ***********
 LaTeX2e <2024-06-01> patch level 1
 L3 programming layer <2024-05-27>
@@ -1298,19 +1313,19 @@ LaTeX Warning: There were undefined references.
 )
 
 Here is how much of LuaTeX's memory you used:
- 23683 strings out of 475931
+ 23691 strings out of 475931
  100000,1977958 words of node,token memory allocated
  546 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 9 attribute, 62 glue_spec, 7 attribute_list, 1 write, 1 user_defined nodes
-   avail lists: 1:2,2:1561,3:242,4:144,5:206,6:86,7:6455,8:1,9:1030,10:9,11:497
- 45732 multiletter control sequences out of 65536+600000
- 56 fonts using 13332007 bytes
- 90i,15n,131p,1037b,498s stack positions out of 10000i,1000n,20000p,200000b,200000s
+   avail lists: 1:2,2:2430,3:300,4:240,5:276,6:123,7:6779,8:1,9:1504,10:9,11:547
+ 45733 multiletter control sequences out of 65536+600000
+ 56 fonts using 13332087 bytes
+ 90i,15n,131p,1037b,581s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/lukas/AppData/Local/Microsoft/Windows/Fonts/NotoSerifBengali-VariableFont_wdth,wght.ttf>
-Output written on step_2_assemble_codebook_from_excel.pdf (9 pages, 91859 bytes).
+Output written on step_2_assemble_codebook_from_excel.pdf (10 pages, 95174 bytes).
 
-PDF statistics: 139 PDF objects out of 1000 (max. 8388607)
- 120 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 131072)
+PDF statistics: 153 PDF objects out of 1000 (max. 8388607)
+ 133 compressed objects within 2 object streams
+ 32 named destinations out of 1000 (max. 131072)
  121 words of extra memory for PDF output out of 10000 (max. 100000000)
 

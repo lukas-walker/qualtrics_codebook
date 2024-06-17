@@ -9,6 +9,8 @@ current_row = 1
 current_question = 1
 current_chapter = 1 # contains row of question where this chapter begins
 
+default_comments = "The code scheme for missing valules can be found on page \\pageref{missingcodes}."
+
 # iterate through all rows until the end of the metadata dataframe
 # prints all pages for each question
 while (current_row <= nrow(df_meta)) {
@@ -36,7 +38,7 @@ while (current_row <= nrow(df_meta)) {
       cat(paste0("## ", df_meta[current_row, ]$`Title`,"\n\n"))
     }
     
-    cb_pages(metadata = df_meta, multi.var = c(current_row), comment = if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "")
+    cb_pages(metadata = df_meta, multi.var = c(current_row), comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments))
     
     # go to next question
     current_row = current_row + 1
@@ -114,7 +116,7 @@ while (current_row <= nrow(df_meta)) {
       }
       
       
-      cb_pages(metadata = df_meta, multi.var = c(current_row), comment = if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "")
+      cb_pages(metadata = df_meta, multi.var = c(current_row), comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments))
     }
     
     # go to next question

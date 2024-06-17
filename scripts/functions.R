@@ -47,3 +47,102 @@ replicate_rows <- function(df, row_index, n) {
   # Combine everything and return
   return(df <- rbind(df[1:(row_index-1), ], replicated_rows, df[(row_index+1):nrow(df), ]))
 }
+
+
+
+
+
+
+
+cb_mistable <- function (metadata, num.var = 1, .miscodes = miscodes) 
+{
+  getinfo = metadata[num.var, .miscodes]
+  df = data.frame(names = colnames(getinfo), values = as.character(getinfo[1, 
+  ]))
+  mistable = df %>% kableExtra::kable("latex", col.names = NULL, 
+                                      booktabs = T) %>% kableExtra::kable_styling(latex_options = c("striped", 
+                                                                                                    "hold_position")) %>% kableExtra::column_spec(2, width = "35em")
+  print(mistable)
+}
+
+
+
+
+cb_pages <- function (metadata, multi.vars, comment = "", lbl.space = "1em", 
+          lblen.space = "1em", mis.space = "1em", escape = TRUE, add_sumplots = FALSE, 
+          response = NULL, stats = "") 
+{
+  for (var in multi.vars) {
+    cb_table(metadata = metadata, num.var = var, lbl.space = lbl.space, 
+             lblen.space = lblen.space, mis.space = mis.space, 
+             escape = escape)
+    cat("\n")
+    cat(comment, sep = "\n")
+    cat("\n")
+    cat("\\newpage")
+    cat("\n")
+    cat("\n")
+  }
+}
+
+
+cb_table <- function (metadata, num.var, .meta = meta, .codes_de = codes_de, 
+          .codes_en = codes_en, .miscodes = miscodes, .languages = languages, 
+          lbl.space = "1em", lblen.space = "1em", mis.space = "1em", 
+          escape = TRUE) 
+{
+  values = c(.codes_de[!is.na(metadata[num.var, .codes_de])], 
+             .codes_en[!is.na(metadata[num.var, .codes_en])])
+  getinfo = metadata[num.var, sort(c(.meta, values, .miscodes))]
+  df = data.frame(names = colnames(getinfo), values = as.character(getinfo[1, 
+  ]))
+  name = as.character(metadata[num.var, "Variable name"])
+  if (length(values) == 0) {
+    cbtable = df %>% kableExtra::kable("latex", col.names = NULL, 
+                                       booktabs = T, longtable = T, escape = escape) %>% 
+      #kableExtra::pack_rows("Missing Labels", length(.meta) + 
+      #                        1, c(length(.meta) + length(.miscodes)), latex_gap_space = mis.space, 
+      #                      bold = F, italic = T) %>% 
+      kableExtra::kable_styling(latex_options = c("striped", "hold_position")) %>% kableExtra::column_spec(2, width = "35em")
+    cat("###", name, sep = " ")
+    print(cbtable)
+  }
+  else {
+    cbtable = df %>% kableExtra::kable("latex", col.names = NULL, 
+                                       booktabs = T, longtable = T, escape = escape) %>% 
+      kableExtra::pack_rows("Value Labels", length(.meta) + 
+                              1, c(length(.meta) + c(length(values)/2)), latex_gap_space = lbl.space) %>% 
+      kableExtra::pack_rows(paste0("Value Labels (", .languages[2], 
+                                   ")"), c(length(.meta) + c(length(values)/2) + 
+                                             1), c(length(.meta) + length(values)), latex_gap_space = lblen.space) %>% 
+      #kableExtra::pack_rows("Missing Labels", 
+      #                      c(length(.meta) + length(values) + 1), 
+      #                      c(length(.meta) + length(values) + length(.miscodes)), 
+      #                      latex_gap_space = mis.space, 
+      #                      bold = F, 
+      #                      italic = T) %>% 
+      kableExtra::kable_styling(latex_options = c("striped", "hold_position")) %>% 
+      kableExtra::column_spec(2,width = "35em")
+    cat("###", name, sep = " ")
+    print(cbtable)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
