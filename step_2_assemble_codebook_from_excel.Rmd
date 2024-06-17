@@ -3,6 +3,7 @@ geometry: "left=2.5cm,right=2.5cm,top=3cm,bottom=3cm"
 header-includes:
 - \usepackage[labelformat=empty]{caption}
 - \usepackage[utf8]{inputenc}
+- \usepackage{polyglossia}
 - \usepackage{placeins}
 - \usepackage{array}
 - \usepackage{float}
@@ -21,6 +22,7 @@ header-includes:
 - \setlength{\headsep}{0.6in} 
 output:
   pdf_document:
+    latex_engine: lualatex
     includes: 
       before_body: frontpage.tex
     toc: yes
@@ -32,7 +34,35 @@ output:
     df_print: paged
 fontsize: 12
 linkcolor: blue
+mainfont: "Noto Serif Bengali"
 ---
+
+```{r, include=FALSE}
+# Check if the font is already installed
+if (FALSE && !("Noto Serif Bengali" %in% system("fc-list", intern = TRUE))) {
+  # Define the URL for the Noto Serif Bengali font
+  font_url <- "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSerifBengali/NotoSerifBengali-Regular.ttf"
+  # Create a user font directory if it doesn't exist
+  #if (!file.exists(".fonts")){
+  #}
+  
+  font_path = file.path(Sys.getenv("USERPROFILE"), "AppData", "Local", "Microsoft", "Windows", "Fonts", "NotoSerifBengali-Regular.ttf")
+  
+  # Download the font
+  if (!file.exists(font_path)){
+    download.file(font_url, destfile = font_path)
+    
+    # Update the font cache
+    system("fc-cache -f -v")
+  }
+}
+
+#tinytex::tlmgr_update()
+#tinytex::uninstall_tinytex()
+#tinytex::install_tinytex()
+#tinytex::tlmgr_install(c("fontspec", "polyglossia", "xunicode", "babel", "csquotes"))
+
+```
 
 ```{r global_options, echo=FALSE}
 knitr::opts_chunk$set(options(
@@ -52,7 +82,11 @@ knitr::opts_chunk$set(options(
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 require(pacman)
 
-p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr)
+p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr,tinytex)
+
+# update tinytex
+#tinytex::tlmgr_update()
+#tinytex::tlmgr_install(c("fontspec", "xunicode", "babel"))
 ```
 
 ```{r, include = FALSE}
@@ -68,7 +102,7 @@ readRenviron("./.Renviron")
 SHARE <- Sys.getenv("SHARE")
 
 # This is the path to your codebook folder (usually where this file is) on your share
-WORKING_DIRECTORY <- "/qualtrics_codebook"
+WORKING_DIRECTORY <- Sys.getenv("WORKING_DIRECTORY")
 
 # This is the output name for the excel file
 CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
