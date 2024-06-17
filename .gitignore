@@ -57,5 +57,6 @@ tmp/
 
 
 # Data files
-.xlsx
-.pdf
+*.xlsx
+*.pdf
+*.log
