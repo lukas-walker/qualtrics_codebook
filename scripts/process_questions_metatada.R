@@ -168,7 +168,7 @@ for (element in codes) {
 }
 
 
-all_columns = c(default_columns, translated_columns_expanded, codes, codes_translation, NON_RESPONSE_COLUMNS)
+all_columns = c(default_columns, "hasDisplayLogic", translated_columns_expanded, codes, codes_translation, NON_RESPONSE_COLUMNS)
 
 df <- data.frame(matrix(ncol = length(all_columns), nrow = 0))
 
@@ -203,6 +203,9 @@ for (question in questions) {
     
     # add non response values
     new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
+    
+    # figure out if this question has associated Display Logic
+    new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
     
     # add question text
     new_row[["Question text"]] = question$QuestionText
@@ -267,6 +270,9 @@ for (question in questions) {
       
       new_row[["Variable name"]] = paste0(question$DataExportTag,"_txt")
       
+      # figure out if this question has associated Display Logic
+      new_row[["hasDisplayLogic"]]  = ("DisplayLogic" %in% names(question)) 
+      
       # add non response values
       new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
       
@@ -318,6 +324,9 @@ for (question in questions) {
       
       # add non response values
       new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
+      
+      # figure out if this question has associated Display Logic
+      new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
       
       # add question text
       new_row[["Question text"]] = question$QuestionText
@@ -383,14 +392,19 @@ for (question in questions) {
         
         new_row[["Variable name"]] = paste0(question$DataExportTag,"x",counter,"_txt")
         
+        # figure out if this question has associated Display Logic
+        new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
+        
         # add non response values
         new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
         
         # add question text
-        new_row[["Question text"]] = question$Choices[[subquestion]]$Display
+        new_row[["Question text"]] = question$QuestionText
+        new_row[["Item text"]] = question$Choices[[subquestion]]$Display
         # add translated question text if it exists
         if (question_is_translated) {
-          new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
+          new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$QuestionText
+          new_row[[paste0("Item text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
         }
         
         # turn the row into a dataframe so we can add it to the output dataframe df
@@ -426,15 +440,20 @@ for (question in questions) {
       counter = counter + 1
       new_row[["Variable name"]] = paste0(question$DataExportTag,"x",counter)
       
+      # figure out if this question has associated Display Logic
+      new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
+      
       
       # add non response values
       new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
       
       # add question text
-      new_row[["Question text"]] = question$Choices[[subquestion]]$Display
+      new_row[["Question text"]] = question$QuestionText
+      new_row[["Item text"]] = question$Choices[[subquestion]]$Display
       # add translated question text if it exists
       if (question_is_translated) {
-        new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
+        new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$QuestionText
+        new_row[[paste0("Item text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
       }
       
       # Ensure the new row has all columns, filling missing ones with NA
@@ -468,14 +487,19 @@ for (question in questions) {
         
         new_row[["Variable name"]] = paste0(question$DataExportTag,"x",counter,"_txt")
         
+        # figure out if this question has associated Display Logic
+        new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
+        
         # add non response values
         new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
         
         # add question text
-        new_row[["Question text"]] = question$Choices[[subquestion]]$Display
+        new_row[["Question text"]] = question$QuestionText
+        new_row[["Item text"]] = question$Choices[[subquestion]]$Display
         # add translated question text if it exists
         if (question_is_translated) {
-          new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
+          new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$QuestionText
+          new_row[[paste0("Item text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
         }
         
         # turn the row into a dataframe so we can add it to the output dataframe df
@@ -492,8 +516,9 @@ for (question in questions) {
   }
   
   
-  # Handle questions that are MultipleChoice with multiple selection
-  # (The Matrix question will be split into subquestions with their own row for each statement)
+  # Handle questions that Rankings
+  
+  
   else if (question$QuestionType == "RO") {
     for (ranking_number in 1:length(question$Choices)) {
       # fill the row
@@ -506,6 +531,9 @@ for (question in questions) {
       # add variable name, i.e. the question name given in qualtrics
       # add a suffix x1, x2, ... to the Variable Name
       new_row[["Variable name"]] = paste0(question$DataExportTag,"_ranking_",ranking_number)
+      
+      # figure out if this question has associated Display Logic
+      new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
       
       
       # add non response values
