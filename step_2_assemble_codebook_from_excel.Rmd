@@ -1,0 +1,173 @@
+---
+geometry: "left=2.5cm,right=2.5cm,top=3cm,bottom=3cm"
+header-includes:
+- \usepackage[labelformat=empty]{caption}
+- \usepackage[utf8]{inputenc}
+- \usepackage{placeins}
+- \usepackage{array}
+- \usepackage{float}
+- \usepackage{fancyhdr}
+- \pagestyle{fancy}
+- \usepackage{graphicx}
+- \usepackage{hyperref}
+- \usepackage[ddmmyyyy]{datetime}
+- \usepackage{booktabs} 
+- \fancyhf{}
+- \fancyhead[C]{\nouppercase{\leftmark}}
+- \fancyfoot[C]{\thepage}
+- \fancyhead[L]{\includegraphics[height=5mm]{img/logo1}}
+- \fancyhead[R]{\includegraphics[height=5mm]{img/logo2.png}}
+- \renewcommand{\headrulewidth}{0.3pt}
+- \setlength{\headsep}{0.6in} 
+output:
+  pdf_document:
+    includes: 
+      before_body: frontpage.tex
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    df_print: paged
+fontsize: 12
+linkcolor: blue
+---
+
+```{r global_options, echo=FALSE}
+knitr::opts_chunk$set(options(
+  # Leave empty space in table if NA
+  knitr.kable.NA = " "),
+  # Not displaying anything except output
+  echo=FALSE,
+  warning=FALSE,
+  message=FALSE, 
+  # Display tables (and not latex code)
+  results = 'asis', 
+  # Setting for summary stats 
+  fig.width = 10, 
+  fig.height = 4)
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+require(pacman)
+
+p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr)
+```
+
+```{r, include = FALSE}
+# Read environment file
+# You have to create this in your local folder.
+# It should contain your folder path, API key, survey id, etc.
+# Also see Readme
+readRenviron("./.Renviron")
+
+# CUSTOM VARIABLES AND PATHS
+
+# This should contain the network location of your share
+SHARE <- Sys.getenv("SHARE")
+
+# This is the path to your codebook folder (usually where this file is) on your share
+WORKING_DIRECTORY <- "/qualtrics_codebook"
+
+# This is the output name for the excel file
+CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
+
+WAVE_PREFIX = "wave1_"
+```
+
+```{r, include=FALSE}
+setwd(paste0(SHARE,WORKING_DIRECTORY))
+```
+
+```{r, include=FALSE}
+
+# Excel Table into R
+df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
+
+# has to be defined for irpanels package to work (should be DE and EN)
+languages <- c("DE", "EN")
+
+```
+
+
+
+```{r indexing metadata info, echo=FALSE}
+# THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
+
+# General variable information (e.g., question type, instruction text)
+meta = 1:14
+
+# German value labels (including -8 and -9)
+codes_de = 15:20
+
+# English value labels (including -8 (EN) and -9 (EN))
+codes_en = 21:26
+
+# Missing labels
+miscodes = 27:35
+```
+
+\newpage
+
+# Labelling Scheme 
+The coding of variable labels follows a uniform scheme. The first two digits denote the wave. For example, for all variables gathered in the first wave, every variable starts with the two identical digits w1_\*, accordingly with w12_\* for the eleventh wave.
+
+The subsequent digits indicate the number of the question, equivalent to its position in the questionnaire. For example, w10_q4 denotes Question 4 of the Wave 10 questionnaire. A similar labeling applies to treatment variables or meta data variables. When the order of questions was randomized for respondents, this is mentioned explicitly.
+
+The last few digits determine the position of an item or answer option in case of an item battery or multiple-answer question. For example, questions might allow multiple answers coded as binary variables for the respective answer choice. Likewise, there are many matrix questions that comprise several items. For example, w12_q5x3 would denote Item 3 from Question 5 in Wave 12. When the order of items was randomized for respondents, this is mentioned explicitly.
+
+# Missing Code Scheme
+If applicable, missing values are coded as follows: 
+
+```{r,  include=TRUE, results="asis"}
+
+#missing labels 
+#upanel.meta[c(31, 30, 13:20)] %>%
+#    kable("latex", col.names = NULL, booktabs = T, linesep = "") %>% 
+#    kable_styling(latex_options = c("striped", "hold_position" )) %>% 
+#    column_spec(2, width = "35em")
+
+cb_mistable(metadata = df_meta)
+```
+
+
+# Presentation of randomisation
+This wave included survey experiments. Randomly defined groups received different treatments in form of information and question texts. The treatment variables display the exact information and question texts for each group. If the treatment concerns the question text of a variable, the different versions will be presented along with the corresponding variable. The following scheme is used to present the different treatments (see [Question 40](#q40) as an example): 
+
++ {...} indicates all treatment values belonging to one treatment variable, 
++ [...] indicates one treatment value within a treatment variable,
++ // delimits the different treatment values and can be interpreted as an exclusive OR. <p>
+
+The control group often receives no information or a shortened question text (without additional information). The absence of an information or text is indicated with an empty field. Control group information are either recorded by a general treatment group variable or a specific treatment variable referring to the information/text. In the latter case, [ ] is used to refer to the (empty) control group value. Otherwise, { } indicates the (empty) control group value.  
+
+# Question Types 
+
+The given question types explain the way respondents were allowed to answer a specific question. This is, either selecting a limited (single choice) or open (multiple choice) number of response options from a given list, inserting text or numeric values in open text boxes, or showing one’s opinion via rating on a predefined continuum. The question type meta data does not result from respondents' answers, but records basic information on individual survey rounds and respondents.
+
+\newpage
+```{r}
+source("scripts/functions.R")
+
+```
+
+
+
+```{r}
+source("scripts/assemble_codebook_pdf.R")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
