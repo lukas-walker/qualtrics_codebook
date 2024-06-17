@@ -41,8 +41,7 @@ p_load(httr,tidyverse,here,openxlsx,rlist)
 # CUSTOM VARIABLES AND PATHS
 
 # This should contain the network location of your share (Create a file called .Renviron and write API_KEY="YOUR_API_KEY" ...)
-SHARE_WINDOWS <- Sys.getenv("SHARE_WINDOWS")
-SHARE_MAC <- Sys.getenv("SHARE_MAC")
+SHARE <- Sys.getenv("SHARE")
 
 # This is the path to your codebook folder (usually where this file is) on your share
 WORKING_DIRECTORY <- "/qualtrics_codebook"
@@ -112,14 +111,7 @@ MARKED_TEXT_TRANSLATED = "Selected"
 NOT_MARKED_TEXT_TRANSLATED = "Not Selected"
 
 # SET WORKING DIRECTORY
-
-if (Sys.info()["sysname"] == "Windows") {
-  #windows
-  setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
-} else {
-  #mac
-  setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
-}
+setwd(paste0(SHARE,WORKING_DIRECTORY))
 
 # ACCESS QUALTRICS API TO RECEIVE METADATA
 headers = c("X-API-TOKEN" = QUALTRICS_API_TOKEN)
@@ -342,7 +334,7 @@ for (question in questions) {
   # Handle questions that are not matrices and not MultipleChoice with multiple selection
   # (Matrix question have a special structure in the API response)
   # (MultipleChoice with multiple selection will be split into binary answers)
-  if (question$QuestionType != "Matrix" && (question$QuestionType != "MC" || question$Selector != "MAVR")){
+  if (question$QuestionType != "Matrix" && (question$QuestionType != "MC" || question$Selector != "MAVR") && question$QuestionType != "RO"){
     # fill the row
     new_row = list( `Dataset` = DATAFRAME_NAME, # same for every row
                     `Item source` = DATA_SOURCE_NAME,  # same for every row
@@ -632,6 +624,73 @@ for (question in questions) {
         # Add the new row to the dataframe
         df <- bind_rows(df, new_row)
       }
+    }
+    
+  }
+  
+  
+  # Handle questions that are MultipleChoice with multiple selection
+  # (The Matrix question will be split into subquestions with their own row for each statement)
+  else if (question$QuestionType == "RO") {
+    for (ranking_number in 1:length(question$Choices)) {
+      # fill the row
+      new_row = list( `Dataset` = DATAFRAME_NAME, # same for every row
+                      `Item source` = DATA_SOURCE_NAME,  # same for every row
+                      `Question type` = question$QuestionType,
+                      `Chapter` = DEFAULT_CHAPTER_TEXT,
+                      `Title` = DEFAULT_TITLE_TEXT) 
+      
+      # add variable name, i.e. the question name given in qualtrics
+      # add a suffix x1, x2, ... to the Variable Name
+      new_row[["Variable name"]] = paste0(question$DataExportTag,"_ranking_",ranking_number)
+      
+      
+      # add non response values
+      new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
+      
+      # add question text
+      new_row[["Question text"]] = question$QuestionText
+      # add translated question text if it exists
+      if (question_is_translated) {
+        new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$QuestionText
+      }
+      
+      # Ensure the new row has all columns, filling missing ones with NA
+      new_row <- lapply(colnames(df), function(col) if (col %in% names(new_row)) new_row[[col]] else NA)
+      names(new_row) <- colnames(df)
+      
+      for (i in names(question$Choices)) {
+        i = as.character(i)
+        
+        # get the choice text (the statement text)
+        choice_text = question[["Choices"]][[i]]$Display
+        # get the translated choice text if it exists
+        if (question_is_translated) {
+          choice_text_translated = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]][["Choices"]][[i]]$Display
+        }
+        
+        # if the question has recoded values, the texts need to be put into the column according to those values
+        if ("RecodeValues" %in% names(question)) {
+          # use the recoded values and the corresponding translation column
+          new_row[[as.character(question$RecodeValues[[i]])]] = choice_text
+          new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        } 
+        # otherwise they just go into their respective columns
+        else {
+          # use the default values and the corresponding translation column
+          new_row[[as.character(i)]] = choice_text
+          new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        }
+      }
+      
+      # turn the row into a dataframe so we can add it to the output dataframe df
+      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+      
+      # make sure all entries are treated as text for the excel
+      new_row[] <- lapply(new_row, as.character)
+      
+      # Add the new row to the dataframe
+      df <- bind_rows(df, new_row)
     }
     
   }

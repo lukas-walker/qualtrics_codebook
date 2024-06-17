@@ -50,8 +50,7 @@ readRenviron("./.Renviron")
 # CUSTOM VARIABLES AND PATHS
 
 # This should contain the network location of your share
-SHARE_WINDOWS <- Sys.getenv("SHARE_WINDOWS")
-SHARE_MAC <- Sys.getenv("SHARE_MAC")
+SHARE <- Sys.getenv("SHARE")
 
 # This is the path to your codebook folder (usually where this file is) on your share
 WORKING_DIRECTORY <- "/qualtrics_codebook"
@@ -63,14 +62,7 @@ WAVE_PREFIX = "wave1_"
 ```
 
 ```{r, include=FALSE}
-# set working directory  
-if (Sys.info()["sysname"] == "Windows") {
-  #windows
-  setwd(paste0(SHARE_WINDOWS,WORKING_DIRECTORY))
-} else {
-  #mac
-  setwd(paste0(SHARE_MAC,WORKING_DIRECTORY))
-}
+setwd(paste0(SHARE,WORKING_DIRECTORY))
 ```
 
 ```{r, include=FALSE}
