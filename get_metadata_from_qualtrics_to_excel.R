@@ -465,10 +465,12 @@ for (question in questions) {
       new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
       
       # add question text
-      new_row[["Question text"]] = question$Choices[[subquestion]]$Display
+      new_row[["Question text"]] = question$QuestionText
+      new_row[["Item text"]] = question$Choices[[subquestion]]$Display
       # add translated question text if it exists
       if (question_is_translated) {
-        new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
+        new_row[[paste0("Question text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$QuestionText
+        new_row[[paste0("Item text (", TRANSLATION_LANGUAGE_CODE, ")")]] = question[["Language"]][[TRANSLATION_LANGUAGE_CODE]]$Choices[[subquestion]]$Display
       }
       
       # Ensure the new row has all columns, filling missing ones with NA
