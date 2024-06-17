@@ -59,7 +59,14 @@ knitr::opts_chunk$set(options(
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 require(pacman)
 
-p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr,tinytex)
+p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr,tinytex,systemfonts)
+
+#Font check
+is_font_installed <- any(system_fonts()$family == "Noto Serif Bengali")
+
+if (!is_font_installed) {
+  stop("The font Noto Serif Bengali is not installed. Go to the .fonts folder and install all the necessary fonts. \n")
+} 
 ```
 
 ```{r, include = FALSE}
