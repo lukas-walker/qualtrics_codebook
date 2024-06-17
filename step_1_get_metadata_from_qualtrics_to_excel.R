@@ -88,7 +88,10 @@ default_columns = c("Variable name", # the name given to the qualtrics question
                     "Question type", # contains the question type
                     "Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
                     "Title", # contains a manually chosen title for the question(Insert manually in excel!)
-                    "Comment" # additional comments that can be added in the excel
+                    "Comment", # additional comments that can be added in the excel
+                    "Sample Filter",
+                    "Questionnaire flow filter",
+                    "Treatment filter"
 )
 
 

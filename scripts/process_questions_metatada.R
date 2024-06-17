@@ -597,4 +597,17 @@ for (question in questions) {
 # SAVE DATAFRAME TO EXCEL
 # ------------------------------------------------------------------------------
 
+remove_html <- function(text) {
+  str_replace_all(text, "<.*?>", "")
+  str_replace_all(text, "&nbsp;", "")
+}
+
+df <- data.frame(lapply(df, function(col) {
+  if (is.character(col)) {
+    remove_html(col)
+  } else {
+    col
+  }
+}), stringsAsFactors = FALSE)
+
 write.xlsx(df, CODEBOOK_XLSX_FILENAME)
