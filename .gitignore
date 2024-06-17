@@ -54,3 +54,8 @@ tmp/
 
 # Environment Variables
 .Renviron
+
+
+# Data files
+.xlsx
+.pdf
