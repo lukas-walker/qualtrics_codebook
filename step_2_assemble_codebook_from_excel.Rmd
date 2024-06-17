@@ -2,8 +2,12 @@
 geometry: "left=2.5cm,right=2.5cm,top=3cm,bottom=3cm"
 header-includes:
 - \usepackage[labelformat=empty]{caption}
-- \usepackage[utf8]{inputenc}
-- \usepackage{polyglossia}
+- \usepackage{fontspec}
+- \usepackage{babel}
+- \babelprovide[import, main]{english}
+- \babelprovide[import]{bengali}
+- \babelfont{rm}{Noto Serif Bengali}  
+- \babelfont[bengali]{rm}[Scale=MatchLowercase]{Noto Serif Bengali}
 - \usepackage{placeins}
 - \usepackage{array}
 - \usepackage{float}
@@ -37,33 +41,6 @@ linkcolor: blue
 mainfont: "Noto Serif Bengali"
 ---
 
-```{r, include=FALSE}
-# Check if the font is already installed
-if (FALSE && !("Noto Serif Bengali" %in% system("fc-list", intern = TRUE))) {
-  # Define the URL for the Noto Serif Bengali font
-  font_url <- "https://github.com/googlefonts/noto-fonts/raw/main/hinted/ttf/NotoSerifBengali/NotoSerifBengali-Regular.ttf"
-  # Create a user font directory if it doesn't exist
-  #if (!file.exists(".fonts")){
-  #}
-  
-  font_path = file.path(Sys.getenv("USERPROFILE"), "AppData", "Local", "Microsoft", "Windows", "Fonts", "NotoSerifBengali-Regular.ttf")
-  
-  # Download the font
-  if (!file.exists(font_path)){
-    download.file(font_url, destfile = font_path)
-    
-    # Update the font cache
-    system("fc-cache -f -v")
-  }
-}
-
-#tinytex::tlmgr_update()
-#tinytex::uninstall_tinytex()
-#tinytex::install_tinytex()
-#tinytex::tlmgr_install(c("fontspec", "polyglossia", "xunicode", "babel", "csquotes"))
-
-```
-
 ```{r global_options, echo=FALSE}
 knitr::opts_chunk$set(options(
   # Leave empty space in table if NA
@@ -83,10 +60,6 @@ knitr::opts_chunk$set(options(
 require(pacman)
 
 p_load(readxl,knitr,pander,kableExtra,tidyverse,irpanels,stringr,tinytex)
-
-# update tinytex
-#tinytex::tlmgr_update()
-#tinytex::tlmgr_install(c("fontspec", "xunicode", "babel"))
 ```
 
 ```{r, include = FALSE}
