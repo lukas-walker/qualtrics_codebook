@@ -44,7 +44,7 @@ p_load(httr,tidyverse,here,openxlsx,rlist)
 SHARE <- Sys.getenv("SHARE")
 
 # This is the path to your codebook folder (usually where this file is) on your share
-WORKING_DIRECTORY <- "/qualtrics_codebook"
+WORKING_DIRECTORY <- Sys.getenv("WORKING_DIRECTORY")
 
 # This is the output name for the excel file
 CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
@@ -59,9 +59,6 @@ DATA_SOURCE_NAME = "Data Source Name"
 # This script expects all relevant questions to have a prefix (e.g. wave1_question1)
 # This is used to only select actual questions and remove e.g. intro texts, timers etc. 
 QUESTION_PREFIX = "wave1_"
-
-DEFAULT_CHAPTER_TEXT = "CHAPTER"
-DEFAULT_TITLE_TEXT = "TITLE"
 
 # Set this to true if your survey uses prefixes
 USING_QUESTION_PREFIX = FALSE
@@ -79,9 +76,27 @@ QUALTRICS_API_TOKEN = Sys.getenv("API_KEY")
 QUALTRICS_SURVEY_ID = Sys.getenv("SURVEY_ID")
 
 # This code needs to match the language settings in the qualtrics survey
-TRANSLATION_LANGUAGE_CODE = "EN"
+TRANSLATION_LANGUAGE_CODE = Sys.getenv("LANGUAGE_CODE")
 
 URL_WITH_TRANSLATIONS = paste0(BASE_URL, QUALTRICS_SURVEY_ID) #, "/translations/", TRANSLATION_LANGUAGE_CODE)
+
+# Default Columns
+default_columns = c("Variable name", # the name given to the qualtrics question
+                    "Variable label", # additional name for e.g. embedded data fields
+                    "Dataset", # contains the computer readable name of the dataset (each row is the same)
+                    "Item source", # contains the human readable name of the dataset (each row is the same)
+                    "Question type", # contains the question type
+                    "Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
+                    "Title", # contains a manually chosen title for the question(Insert manually in excel!)
+                    "Comment" # additional comments that can be added in the excel
+)
+
+
+# These columns with get an additional column for each language with the corresponding language code (e.g. Column (EN))
+translated_columns = c("Intro text", # introduction text to the question
+                       "Question text", # The actual text of the question
+                       "Item text") # Text for multiple choice questions with multiple possible answers (will be split into binary questions for each item)
+
 
 # Non response columns
 NON_RESPONSE_COLUMNS = c("-22", #"not in panel"
@@ -109,6 +124,9 @@ MARKED_TEXT_ORIGINAL = "Markiert"
 NOT_MARKED_TEXT_ORIGINAL = "Nicht Markiert"
 MARKED_TEXT_TRANSLATED = "Selected"
 NOT_MARKED_TEXT_TRANSLATED = "Not Selected"
+
+DEFAULT_CHAPTER_TEXT = "CHAPTER"
+DEFAULT_TITLE_TEXT = "TITLE"
 
 # SET WORKING DIRECTORY
 setwd(paste0(SHARE,WORKING_DIRECTORY))
@@ -269,23 +287,6 @@ codes <- c(sorted_non_negative, sorted_negative)
 # CREATE METADATA DATAFRAME WITH ALL ITS COLUMNS
 # ------------------------------------------------------------------------------
 
-
-default_columns = c("Variable name", # the name given to the qualtrics question
-                    "Variable label", # additional name for e.g. embedded data fields
-                    "Dataset", # contains the computer readable name of the dataset (each row is the same)
-                    "Item source", # contains the human readable name of the dataset (each row is the same)
-                    "Question type", # contains the question type
-                    "Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
-                    "Title", # contains a manually chosen title for the question(Insert manually in excel!)
-                    "Comment" # additional comments that can be added in the excel
-                    )
-
-
-# These columns with get an additional column for each language with the corresponding language code (e.g. Column (EN))
-translated_columns = c("Intro text", # introduction text to the question
-                    "Question text", # The actual text of the question
-                    "Item text") # Text for multiple choice questions with multiple possible answers (will be split into binary questions for each item)
-
 # Add the Language code to the translated columns
 translated_columns_expanded = list()
 
@@ -375,7 +376,9 @@ for (question in questions) {
       if ("RecodeValues" %in% names(question)) {
         # use the recoded values and the corresponding translation column
         new_row[[as.character(question$RecodeValues[[i]])]] = choice_text
-        new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        if (question_is_translated) {
+          new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        }
       } 
       # otherwise they just go into their respective columns
       else {
@@ -488,7 +491,10 @@ for (question in questions) {
         if ("RecodeValues" %in% names(question)) {
           # use the recoded values and the corresponding translation column
           new_row[[as.character(question$RecodeValues[[i]])]] = choice_text
-          new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          
+          if (question_is_translated) {
+            new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          }
         } 
         # otherwise they just go into their respective columns
         else {
@@ -673,7 +679,10 @@ for (question in questions) {
         if ("RecodeValues" %in% names(question)) {
           # use the recoded values and the corresponding translation column
           new_row[[as.character(question$RecodeValues[[i]])]] = choice_text
-          new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          
+          if (question_is_translated) {
+            new_row[[paste0(question$RecodeValues[[i]], " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          }
         } 
         # otherwise they just go into their respective columns
         else {
