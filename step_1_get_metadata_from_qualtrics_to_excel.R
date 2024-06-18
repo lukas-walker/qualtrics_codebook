@@ -24,7 +24,14 @@
 #-------------------------------------------------------------------------------
 
 
+
+# LOAD PACKAGES
+
 require(pacman)
+p_load(httr,tidyverse,here,openxlsx,rlist)
+
+# sets wd to this script's location
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 # Read environment file
 # You have to create this in your local folder.
@@ -33,18 +40,8 @@ require(pacman)
 readRenviron("./.Renviron")
 
 
-# LOAD PACKAGES
-
-p_load(httr,tidyverse,here,openxlsx,rlist)
-
 
 # CUSTOM VARIABLES AND PATHS
-
-# This should contain the network location of your share (Create a file called .Renviron and write API_KEY="YOUR_API_KEY" ...)
-SHARE <- Sys.getenv("SHARE")
-
-# This is the path to your codebook folder (usually where this file is) on your share
-WORKING_DIRECTORY <- Sys.getenv("WORKING_DIRECTORY")
 
 # This is the output name for the excel file
 CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
@@ -130,9 +127,6 @@ NOT_MARKED_TEXT_TRANSLATED = "Not Selected"
 
 DEFAULT_CHAPTER_TEXT = "CHAPTER"
 DEFAULT_TITLE_TEXT = "TITLE"
-
-# SET WORKING DIRECTORY
-setwd(paste0(SHARE,WORKING_DIRECTORY))
 
 # ACCESS QUALTRICS API TO RECEIVE METADATA
 headers = c("X-API-TOKEN" = QUALTRICS_API_TOKEN)
