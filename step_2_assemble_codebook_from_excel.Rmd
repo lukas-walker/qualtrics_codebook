@@ -59,7 +59,7 @@ knitr::opts_chunk$set(options(
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 require(pacman)
 
-p_load(readxl,knitr,pander,kableExtra,tidyverse,stringr,tinytex,systemfonts,irpanels)
+p_load(readxl,knitr,pander,kableExtra,tidyverse,stringr,tinytex,systemfonts)
 
 # sets wd to this script's location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -107,16 +107,16 @@ languages <- c("EN", "BN")
 # THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
 
 # General variable information (e.g., question type, instruction text)
-meta = 1:14
+meta = 1:18
 
 # German value labels (including -8 and -9)
-codes_de = 15:67
+codes_de = 19:70
 
 # English value labels (including -8 (EN) and -9 (EN))
-codes_en = 68:120
+codes_en = 71:122
 
 # Missing labels
-miscodes = 121:129
+miscodes = 123:131
 ```
 
 \newpage

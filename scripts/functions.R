@@ -31,7 +31,7 @@ print_text_box_pages <- function(rows_of_current_special_rows){
     if (grepl("_txt", df_meta[["Variable name"]][rows_of_current_special_rows[i]])) {
       # THIS IS A TEXT BOX QUESTION ROW
       
-      cb_page(metadata = df_meta, num.var = row_of_single_page_question)
+      cb_pages(metadata = df_meta, multi.var = c(row_of_single_page_question))
     }
   }
 }
@@ -108,13 +108,21 @@ cb_table <- function (metadata, num.var, .meta = meta, .codes_de = codes_de,
     print(cbtable)
   }
   else {
-    cbtable = df %>% kableExtra::kable("latex", col.names = NULL, 
-                                       booktabs = T, longtable = T, escape = escape) %>% 
-      kableExtra::pack_rows("Value Labels", length(.meta) + 
-                              1, c(length(.meta) + c(length(values)/2)), latex_gap_space = lbl.space) %>% 
-      kableExtra::pack_rows(paste0("Value Labels (", .languages[2], 
-                                   ")"), c(length(.meta) + c(length(values)/2) + 
-                                             1), c(length(.meta) + length(values)), latex_gap_space = lblen.space) %>% 
+    cbtable = df %>% kableExtra::kable("latex", 
+                                       col.names = NULL, 
+                                       booktabs = T, 
+                                       longtable = T, 
+                                       escape = escape) %>% 
+      kableExtra::pack_rows("Value Labels", 
+                            length(.meta) + 1, 
+                            c(length(.meta) + c(length(values)/2)), 
+                            latex_gap_space = lbl.space) %>% 
+      kableExtra::pack_rows(paste0("Value Labels (", 
+                                   .languages[2], 
+                                   ")"), 
+                            c(length(.meta) + c(length(values)/2) + 1), 
+                            c(length(.meta) + length(values)), 
+                            latex_gap_space = lblen.space) %>% 
       #kableExtra::pack_rows("Missing Labels", 
       #                      c(length(.meta) + length(values) + 1), 
       #                      c(length(.meta) + length(values) + length(.miscodes)), 
@@ -127,21 +135,6 @@ cb_table <- function (metadata, num.var, .meta = meta, .codes_de = codes_de,
     print(cbtable)
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
