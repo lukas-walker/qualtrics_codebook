@@ -170,7 +170,7 @@ for (element in codes) {
 
 all_columns = c(default_columns, "hasDisplayLogic", translated_columns_expanded, codes, codes_translation, NON_RESPONSE_COLUMNS)
 
-df <- data.frame(matrix(ncol = length(all_columns), nrow = 0))
+df <- data.frame(matrix(ncol = length(all_columns), nrow = 0), check.names = FALSE)
 
 # Set the column names
 colnames(df) <- all_columns
@@ -248,7 +248,7 @@ for (question in questions) {
     
     
     # turn the row into a dataframe so we can add it to the output dataframe df
-    new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+    new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
     
     # make sure all entries are treated as text for the excel
     new_row[] <- lapply(new_row, as.character)
@@ -283,7 +283,7 @@ for (question in questions) {
       }
       
       # turn the row into a dataframe so we can add it to the output dataframe df
-      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
       
       # make sure all entries are treated as text for the excel
       new_row[] <- lapply(new_row, as.character)
@@ -372,7 +372,7 @@ for (question in questions) {
       
       
       # turn the row into a dataframe so we can add it to the output dataframe df
-      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
       
       # make sure all entries are treated as text for the excel
       new_row[] <- lapply(new_row, as.character)
@@ -408,7 +408,7 @@ for (question in questions) {
         }
         
         # turn the row into a dataframe so we can add it to the output dataframe df
-        new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+        new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
         
         # make sure all entries are treated as text for the excel
         new_row[] <- lapply(new_row, as.character)
@@ -467,7 +467,7 @@ for (question in questions) {
       new_row[[paste0("1 (",TRANSLATION_LANGUAGE_CODE,")")]] = MARKED_TEXT_TRANSLATED
       
       # turn the row into a dataframe so we can add it to the output dataframe df
-      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
       
       # make sure all entries are treated as text for the excel
       new_row[] <- lapply(new_row, as.character)
@@ -503,7 +503,7 @@ for (question in questions) {
         }
         
         # turn the row into a dataframe so we can add it to the output dataframe df
-        new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+        new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
         
         # make sure all entries are treated as text for the excel
         new_row[] <- lapply(new_row, as.character)
@@ -578,7 +578,7 @@ for (question in questions) {
       }
       
       # turn the row into a dataframe so we can add it to the output dataframe df
-      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, , check.names = FALSE)
+      new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
       
       # make sure all entries are treated as text for the excel
       new_row[] <- lapply(new_row, as.character)
@@ -604,10 +604,8 @@ remove_html <- function(text) {
 
 df <- data.frame(lapply(df, function(col) {
   if (is.character(col)) {
-    remove_html(col)
-  } else {
-    col
+    col[-1] <- remove_html(col[-1])
   }
-}), stringsAsFactors = FALSE)
+}), stringsAsFactors = FALSE, check.names = FALSE)
 
 write.xlsx(df, CODEBOOK_XLSX_FILENAME)
