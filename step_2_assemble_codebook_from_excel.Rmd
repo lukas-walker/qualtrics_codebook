@@ -72,6 +72,10 @@ if (!is_font_installed) {
 } 
 ```
 
+```{r}
+source("scripts/functions.R")
+```
+
 ```{r, include = FALSE}
 # Read environment file
 # You have to create this in your local folder.
@@ -85,10 +89,6 @@ readRenviron("./.Renviron")
 CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
 
 WAVE_PREFIX = "wave1_"
-```
-
-```{r, include=FALSE}
-setwd(paste0(SHARE,WORKING_DIRECTORY))
 ```
 
 ```{r, include=FALSE}
@@ -149,11 +149,6 @@ miscodes = c()
 FILL IN QUESTION TYPES IF NECESSARY
 
 \newpage
-```{r}
-source("scripts/functions.R")
-
-```
-
 
 
 ```{r}
