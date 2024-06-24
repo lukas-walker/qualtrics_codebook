@@ -83,27 +83,15 @@ source("scripts/functions.R")
 # Also see Readme
 readRenviron("./.Renviron")
 
+# THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
+
 # CUSTOM VARIABLES AND PATHS
 
 # This is the output name for the excel file
 CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
 
 WAVE_PREFIX = "wave1_"
-```
 
-```{r, include=FALSE}
-
-# Excel Table into R
-df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
-
-# has to be defined for irpanels package to work (should be DE and EN)
-languages <- c("EN", "BN")
-
-```
-
-
-
-```{r indexing metadata info, echo=FALSE}
 # THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
 
 # General variable information (e.g., question type, instruction text)
@@ -117,7 +105,19 @@ codes_en = 71:122
 
 # Missing labels
 miscodes = 123:131
+
 ```
+
+```{r, include=FALSE}
+
+# Excel Table into R
+df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
+
+# has to be defined for irpanels package to work (should be DE and EN)
+languages <- c("EN", "BN")
+
+```
+
 
 \newpage
 
