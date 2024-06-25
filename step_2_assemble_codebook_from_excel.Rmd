@@ -101,7 +101,7 @@ meta = 1:18
 codes_original_language = 19:70
 
 # English value labels (including -8 (EN) and -9 (EN))
-codes_tranlated_language = 71:122
+codes_translated_language = 71:122
 
 # Missing labels
 miscodes = 123:131
