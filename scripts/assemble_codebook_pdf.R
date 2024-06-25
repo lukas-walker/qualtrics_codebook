@@ -9,6 +9,13 @@ current_row = 1
 current_question = 1
 current_chapter = 1 # contains row of question where this chapter begins
 
+if ("Subchapter" %in% names(df_meta)) {
+  current_sub_chapter = 1 # contains row of question where this chapter begins
+  uses_subchapters = TRUE
+} else {
+  uses_subchapters = FALSE
+}
+
 default_comments = "The code scheme for missing valules can be found on page \\pageref{missingcodes}."
 
 # iterate through all rows until the end of the metadata dataframe
@@ -22,14 +29,30 @@ while (current_row <= nrow(df_meta)) {
     cat(paste0("# ", df_meta$Chapter[current_chapter], "\n\n"))
   }
   
+  # if the meta file also has subchapters
+  if (uses_subchapters) {
+    if (df_meta$Subchapter[current_sub_chapter] != df_meta$Subchapter[current_row] || current_row == 1) {
+      # NEW SUB CHAPTER REACHED
+      current_sub_chapter = current_row
+      
+      # PRINT CHAPTER
+      cat(paste0("## ", df_meta$Subchapter[current_sub_chapter], "\n\n"))
+    }
+  }
+  
   # get question name identifier (e.g. "w12_q3x1")
   row_identifier = df_meta[["Variable name"]][current_row]
   
   # get question number (e.g. "3")
   question_number = str_extract(gsub(paste0(WAVE_PREFIX, "q"), "", row_identifier), "^[0-9]+")
   
+  # if subchapters are used, the title hierarchies should be moved down by adding one # before the title
+  if (uses_subchapters) {
+    cat("#")
+  }
+  
   # HANDLE SPECIAL CASES (where there is no question number)
-  if (is.na(question_number)) {
+  if (is.na(question_number) || TRUE) {
     if (is.na(df_meta[current_row, ]$`Title`)
         || 
         df_meta[current_row, ]$`Title` == " ") {
@@ -38,6 +61,10 @@ while (current_row <= nrow(df_meta)) {
       cat(paste0("## ", df_meta[current_row, ]$`Title`,"\n\n"))
     }
     
+    # if subchapters are used, the title hierarchies should be moved down by adding one # before the question as well
+    if (uses_subchapters) {
+      cat("#")
+    }
     cb_pages(metadata = df_meta, multi.var = c(current_row), comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments))
     
     # go to next question
@@ -50,6 +77,10 @@ while (current_row <= nrow(df_meta)) {
     
     if (current_question != question_number || current_row == 1) {
       # PRINT TITLE
+      # if subchapters are used, the title hierarchies should be moved down by adding one # before the title
+      if (uses_subchapters) {
+        cat("#")
+      }
       # print the title for this page or these pages if there are multiple subquestions
       cat(paste0("## Question ", question_number,": ",df_meta[current_row, ]$`Title`,"\n\n"))
       

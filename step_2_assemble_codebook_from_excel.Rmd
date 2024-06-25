@@ -98,13 +98,13 @@ WAVE_PREFIX = "wave1_"
 meta = 1:18
 
 # German value labels (including -8 and -9)
-codes_original_language = 19:70
+codes_original_language = 20:71
 
 # English value labels (including -8 (EN) and -9 (EN))
-codes_translated_language = 71:122
+codes_translated_language = 72:123
 
 # Missing labels
-miscodes = 123:131
+miscodes = 124:132
 
 ```
 

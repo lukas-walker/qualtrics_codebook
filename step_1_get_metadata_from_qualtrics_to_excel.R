@@ -90,6 +90,7 @@ default_columns = c("Variable name", # the name given to the qualtrics question
 )
 
 default_columns_not_in_table = c("Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
+                                 "Subchapter", # contains a manually chosen subchapter name (Insert manually in excel!)
                                  "Title") # contains a manually chosen title for the question(Insert manually in excel!)
 
 
