@@ -113,6 +113,27 @@ miscodes = 124:132
 # Excel Table into R
 df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
 
+# Function to remove all html content from the dataframe
+remove_html <- function(text) {
+  # Parse the text as HTML
+  doc <- read_html(paste0("<div>", text, "</div>"))
+  # Extract the text content, which removes the HTML tags
+  cleaned_text <- xml_text(xml_find_all(doc, ".//text()"))
+  # Join the text nodes and remove non-breaking spaces
+  cleaned_text <- paste(cleaned_text, collapse = " ")
+  cleaned_text <- gsub("&nbsp;", "", cleaned_text)
+  return(cleaned_text)
+}
+
+# apply remove_html to each column if the column is character based
+df_meta <- data.frame(lapply(df_meta, function(column) {
+  if(is.character(column)) {
+    return(sapply(column, remove_html))
+  } else {
+    return(column)
+  }
+}), stringsAsFactors = FALSE, check.names = FALSE)
+
 # has to be defined for irpanels package to work (should be DE and EN)
 languages <- c("EN", "BN")
 

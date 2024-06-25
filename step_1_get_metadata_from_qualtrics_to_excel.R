@@ -28,7 +28,7 @@
 # LOAD PACKAGES
 
 require(pacman)
-p_load(httr,tidyverse,here,openxlsx,rlist)
+p_load(httr,tidyverse,here,openxlsx,rlist,xml2)
 
 # sets wd to this script's location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))

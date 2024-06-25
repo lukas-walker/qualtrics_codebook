@@ -597,15 +597,32 @@ for (question in questions) {
 # SAVE DATAFRAME TO EXCEL
 # ------------------------------------------------------------------------------
 
+#remove_html <- function(text) {
+#  text <- str_replace_all(text, "<[^>]+>", "")
+#  text <- str_replace_all(text, "&nbsp;", "")
+#  return(text)
+#}
+
+# Function to remove all html content from the dataframe
 remove_html <- function(text) {
-  str_replace_all(text, "<.*?>", "")
-  str_replace_all(text, "&nbsp;", "")
+  # Parse the text as HTML
+  doc <- read_html(paste0("<div>", text, "</div>"))
+  # Extract the text content, which removes the HTML tags
+  cleaned_text <- xml_text(xml_find_all(doc, ".//text()"))
+  # Join the text nodes and remove non-breaking spaces
+  cleaned_text <- paste(cleaned_text, collapse = " ")
+  cleaned_text <- gsub("&nbsp;", "", cleaned_text)
+  return(cleaned_text)
 }
 
-df <- data.frame(lapply(df, function(col) {
-  if (is.character(col)) {
-    col[-1] <- remove_html(col[-1])
+# apply remove_html to each column if the column is character based
+df <- data.frame(lapply(df, function(column) {
+  if(is.character(column)) {
+    return(sapply(column, remove_html))
+  } else {
+    return(column)
   }
 }), stringsAsFactors = FALSE, check.names = FALSE)
+
 
 write.xlsx(df, CODEBOOK_XLSX_FILENAME)
