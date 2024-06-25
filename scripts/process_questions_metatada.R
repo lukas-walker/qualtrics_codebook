@@ -168,7 +168,7 @@ for (element in codes) {
 }
 
 
-all_columns = c(default_columns, "hasDisplayLogic", translated_columns_expanded, codes, codes_translation, NON_RESPONSE_COLUMNS)
+all_columns = c(default_columns, "hasDisplayLogic", translated_columns_expanded, default_columns_not_in_table, codes, codes_translation, NON_RESPONSE_COLUMNS)
 
 df <- data.frame(matrix(ncol = length(all_columns), nrow = 0), check.names = FALSE)
 

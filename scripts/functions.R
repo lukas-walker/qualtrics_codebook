@@ -12,7 +12,7 @@ print_intro_rows <- function(rows_of_current_special_rows){
     # if the row is an intro row, print the intro
     if (grepl("intro", df_meta[["Variable name"]][rows_of_current_special_rows[i]])) {
       # THIS IS AN INTRO ROW
-      cat(paste0(df_meta[["Question text (EN)"]][rows_of_current_special_rows[i]], "\n\n"))
+      cat(paste0(df_meta[[paste0("Question text ("+TRANSLATION_LANGUAGE_CODE+")")]][rows_of_current_special_rows[i]], "\n\n"))
     }
   }
 }
@@ -86,13 +86,13 @@ cb_pages <- function (metadata, multi.vars, comment = "", lbl.space = "1em",
 }
 
 
-cb_table <- function (metadata, num.var, .meta = meta, .codes_de = codes_de, 
-          .codes_en = codes_en, .miscodes = miscodes, .languages = languages, 
+cb_table <- function (metadata, num.var, .meta = meta, .codes_original_language = codes_original_language, 
+          .codes_translated_language = codes_translated_language, .miscodes = miscodes, .languages = languages, 
           lbl.space = "1em", lblen.space = "1em", mis.space = "1em", 
           escape = TRUE) 
 {
-  values = c(.codes_de[!is.na(metadata[num.var, .codes_de])], 
-             .codes_en[!is.na(metadata[num.var, .codes_en])])
+  values = c(.codes_original_language[!is.na(metadata[num.var, .codes_original_language])], 
+             .codes_translated_language[!is.na(metadata[num.var, .codes_translated_language])])
   getinfo = metadata[num.var, sort(c(.meta, values, .miscodes))]
   df = data.frame(names = colnames(getinfo), values = as.character(getinfo[1, 
   ]))

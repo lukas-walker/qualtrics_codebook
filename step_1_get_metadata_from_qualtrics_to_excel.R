@@ -83,13 +83,15 @@ default_columns = c("Variable name", # the name given to the qualtrics question
                     "Dataset", # contains the computer readable name of the dataset (each row is the same)
                     "Item source", # contains the human readable name of the dataset (each row is the same)
                     "Question type", # contains the question type
-                    "Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
-                    "Title", # contains a manually chosen title for the question(Insert manually in excel!)
                     "Comment", # additional comments that can be added in the excel
                     "Sample Filter",
                     "Questionnaire flow filter",
                     "Treatment filter"
 )
+
+default_columns_not_in_table = c("Chapter", # contains a manually chosen chapter name (Insert manually in excel!)
+                                 "Title") # contains a manually chosen title for the question(Insert manually in excel!)
+
 
 
 # These columns with get an additional column for each language with the corresponding language code (e.g. Column (EN))
