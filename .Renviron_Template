@@ -1,0 +1,4 @@
+# .Renviron
+API_KEY=""
+SURVEY_ID=""
+LANGUAGE_CODE="BN"
