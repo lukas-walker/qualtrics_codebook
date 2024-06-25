@@ -605,6 +605,7 @@ for (question in questions) {
 
 # Function to remove all html content from the dataframe
 remove_html <- function(text) {
+  if (is.na(text)) return(NA)
   # Parse the text as HTML
   doc <- read_html(paste0("<div>", text, "</div>"))
   # Extract the text content, which removes the HTML tags
