@@ -33,18 +33,18 @@ p_load(httr,tidyverse,here,openxlsx,rlist,xml2)
 # sets wd to this script's location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
+source("scripts/functions.R")
+
 # Read environment file
 # You have to create this in your local folder.
 # It should contain your folder path, API key, survey id, etc.
 # Also see Readme
 readRenviron("./.Renviron")
 
-
-
 # CUSTOM VARIABLES AND PATHS
 
 # This is the output name for the excel file
-CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
+CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME")
 
 # This is the name that the data set has in the end (e.g. panelX_wave1)
 # (this should be computer readable)
@@ -55,10 +55,10 @@ DATA_SOURCE_NAME = "Data Source Name"
 
 # This script expects all relevant questions to have a prefix (e.g. wave1_question1)
 # This is used to only select actual questions and remove e.g. intro texts, timers etc. 
-QUESTION_PREFIX = "wave1_"
+WAVE_PREFIX = Sys.getenv("WAVE_PREFIX")
 
 # Set this to true if your survey uses prefixes
-USING_QUESTION_PREFIX = FALSE
+USING_WAVE_PREFIX = FALSE
 
 # Qualtrics API url: https://[Datacenter ID].qualtrics.com/API/v3/surveys/[Survey ID]/
 # All info can be found on Qualtrics (Account Settings-> Qualtrics IDs)
@@ -73,7 +73,7 @@ QUALTRICS_API_TOKEN = Sys.getenv("API_KEY")
 QUALTRICS_SURVEY_ID = Sys.getenv("SURVEY_ID")
 
 # This code needs to match the language settings in the qualtrics survey
-TRANSLATION_LANGUAGE_CODE = Sys.getenv("LANGUAGE_CODE")
+TRANSLATION_LANGUAGE_CODE = Sys.getenv("TRANSLATED_LANGUAGE_CODE")
 
 URL_WITH_TRANSLATIONS = paste0(BASE_URL, QUALTRICS_SURVEY_ID) #, "/translations/", TRANSLATION_LANGUAGE_CODE)
 
@@ -122,6 +122,12 @@ NON_RESPONSE_COLUMNS_VALUES = list(`-22` = "not in panel",
                                  `-97` = "nonvalid answer in survey (e.g. ambigious)",
                                  `-99` = "item nonresponse")
 
+REPLACE_QUALTRIX_QUESTION_TYPES = list("MC" = "Single Choice", # all multiple choice questions are split into binary values
+                                       "Matrix" = "Single Choice", # all matrix questions are split into single choice questions
+                                       "TE" = "Text Entry", 
+                                       "RO" = "Ranking Order" # all multiple choice questions are split into binary values
+                                      )
+
 # for binary questions, these will be added to the 0 and 1 columns respectively
 MARKED_TEXT_ORIGINAL = "Markiert"
 NOT_MARKED_TEXT_ORIGINAL = "Nicht Markiert"
@@ -129,6 +135,7 @@ MARKED_TEXT_TRANSLATED = "Selected"
 NOT_MARKED_TEXT_TRANSLATED = "Not Selected"
 
 DEFAULT_CHAPTER_TEXT = "CHAPTER"
+DEFAULT_SUBCHAPTER_TEXT = "SUBCHAPTER"
 DEFAULT_TITLE_TEXT = "TITLE"
 
 # ACCESS QUALTRICS API TO RECEIVE METADATA

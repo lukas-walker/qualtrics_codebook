@@ -2,12 +2,6 @@
 geometry: "left=2.5cm,right=2.5cm,top=3cm,bottom=3cm"
 header-includes:
 - \usepackage[labelformat=empty]{caption}
-- \usepackage{fontspec}
-- \usepackage{babel}
-- \babelprovide[import, main]{english}
-- \babelprovide[import]{bengali}
-- \babelfont{rm}{Noto Serif Bengali}  
-- \babelfont[bengali]{rm}[Scale=MatchLowercase]{Noto Serif Bengali}
 - \usepackage{placeins}
 - \usepackage{array}
 - \usepackage{float}
@@ -38,41 +32,44 @@ output:
     df_print: paged
 fontsize: 12
 linkcolor: blue
-mainfont: "Noto Serif Bengali"
+mainfont: "`r Sys.getenv('FONT')`"
 ---
 
-```{r global_options, echo=FALSE}
-knitr::opts_chunk$set(options(
-  # Leave empty space in table if NA
-  knitr.kable.NA = " "),
-  # Not displaying anything except output
-  echo=FALSE,
-  warning=FALSE,
-  message=FALSE, 
-  # Display tables (and not latex code)
-  results = 'asis', 
-  # Setting for summary stats 
-  fig.width = 10, 
-  fig.height = 4)
-```
+
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 require(pacman)
 
-p_load(readxl,knitr,pander,kableExtra,tidyverse,stringr,tinytex,systemfonts)
+p_load(readxl,knitr,pander,kableExtra,tidyverse,stringr,tinytex,systemfonts,xml2)
 
 # sets wd to this script's location
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
-
-#Font check
-is_font_installed <- any(system_fonts()$family == "Noto Serif Bengali")
-
-if (!is_font_installed) {
-  stop("The font Noto Serif Bengali is not installed. Go to the .fonts folder and install all the necessary fonts. \n")
-} 
 ```
 
 ```{r}
+
+
+```
+
+```{r global_options, echo=FALSE}
+# Set global chunk options
+knitr::opts_chunk$set(
+  # Leave empty space in table if NA
+  knitr.kable.NA = " ",
+  # Not displaying anything except output
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE, 
+  # Display tables (and not latex code)
+  results = 'asis', 
+  # Setting for summary stats 
+  fig.width = 10, 
+  fig.height = 4
+)
+```
+
+```{r}
+# load additional functions
 source("scripts/functions.R")
 ```
 
@@ -81,30 +78,64 @@ source("scripts/functions.R")
 # You have to create this in your local folder.
 # It should contain your folder path, API key, survey id, etc.
 # Also see Readme
+
+# EXTRACTING INFORMATION FROM .Renviron FILE
 readRenviron("./.Renviron")
 
-# THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
+FONT = Sys.getenv("FONT")
 
-# CUSTOM VARIABLES AND PATHS
+# if it's a specific Bengali font (with special characters)
+# this codeblock is from a specific project and can be deleted in the future
+if (FONT == "Noto Serif Bengali") {
+  # additional latex packages necessary for bengali characters
+  cat("
+  \\usepackage{fontspec}
+  \\usepackage{babel}
+  \\babelprovide[import, main]{english}
+  \\babelprovide[import]{bengali}
+  \\babelfont{rm}{Noto Serif Bengali}
+  \\babelfont[bengali]{rm}[Scale=MatchLowercase]{Noto Serif Bengali}
+  ")
+  
+  #Font check
+  is_font_installed <- any(system_fonts()$family == FONT)
+  
+  if (!is_font_installed) {
+    stop(paste0("The font ", FONT, " is not installed. Go to the .fonts folder and install all the necessary fonts. \n"))
+  } 
+} 
+
+# if it's any other font
+if (FONT != "") {
+  #Font check
+  is_font_installed <- any(system_fonts()$family == FONT)
+  
+  if (!is_font_installed) {
+    stop(paste0("The font ", FONT, " is not installed. Go to the .fonts folder and install all the necessary fonts. \n"))
+  } 
+}
 
 # This is the output name for the excel file
-CODEBOOK_XLSX_FILENAME <- "codebook_data.xlsx"
+CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME")
 
-WAVE_PREFIX = "wave1_"
-
-# THIS PART NEEDS TO BE FILLED IN WITH NUMBERS ACCORDING TO THE METADATA EXCEL
+WAVE_PREFIX = Sys.getenv("WAVE_PREFIX")
 
 # General variable information (e.g., question type, instruction text)
-meta = 1:18
+meta = eval(parse(text = Sys.getenv("META")))
 
 # German value labels (including -8 and -9)
-codes_original_language = 20:71
+codes_original_language = eval(parse(text = Sys.getenv("VALUE_CODES_ORIGINAL_LANGUAGE")))
 
 # English value labels (including -8 (EN) and -9 (EN))
-codes_translated_language = 72:123
+codes_translated_language = eval(parse(text = Sys.getenv("VALUE_CODES_TRANSLATED_LANGUAGE")))
 
 # Missing labels
-miscodes = 124:132
+miscodes = eval(parse(text = Sys.getenv("MISSING_VALUE_CODES")))
+
+ORIGINAL_LANGUAGE_CODE = Sys.getenv("ORIGINAL_LANGUAGE_CODE")
+TRANSLATED_LANGUAGE_CODE = Sys.getenv("TRANSLATED_LANGUAGE_CODE")
+languages <- c(ORIGINAL_LANGUAGE_CODE, TRANSLATED_LANGUAGE_CODE)
+
 
 ```
 
@@ -112,18 +143,6 @@ miscodes = 124:132
 
 # Excel Table into R
 df_meta <- read_excel(CODEBOOK_XLSX_FILENAME)
-
-# Function to remove all html content from the dataframe
-remove_html <- function(text) {
-  # Parse the text as HTML
-  doc <- read_html(paste0("<div>", text, "</div>"))
-  # Extract the text content, which removes the HTML tags
-  cleaned_text <- xml_text(xml_find_all(doc, ".//text()"))
-  # Join the text nodes and remove non-breaking spaces
-  cleaned_text <- paste(cleaned_text, collapse = " ")
-  cleaned_text <- gsub("&nbsp;", "", cleaned_text)
-  return(cleaned_text)
-}
 
 # apply remove_html to each column if the column is character based
 df_meta <- data.frame(lapply(df_meta, function(column) {
@@ -134,8 +153,6 @@ df_meta <- data.frame(lapply(df_meta, function(column) {
   }
 }), stringsAsFactors = FALSE, check.names = FALSE)
 
-# has to be defined for irpanels package to work (should be DE and EN)
-languages <- c("EN", "BN")
 
 ```
 
@@ -160,9 +177,6 @@ If applicable, missing values are coded as follows:
 cat("\\label{missingcodes}")
 
 cb_mistable(metadata = df_meta)
-
-# remove missing codes from every page
-miscodes = c()
 ```
 
 # Question Types 

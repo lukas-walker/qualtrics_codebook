@@ -1,4 +1,29 @@
 # .Renviron
 API_KEY=""
 SURVEY_ID=""
-LANGUAGE_CODE="BN"
+ORIGINAL_LANGUAGE_CODE="DE"
+TRANSLATED_LANGUAGE_CODE="EN"
+
+CODEBOOK_XLSX_FILENAME="codebook_data.xlsx"
+
+# Leave empty if you want to use the default
+FONT=""
+
+# Leave empty if you don't use wave prefixes in your survey (e.g. "w1_" for each question)
+WAVE_PREFIX=""
+
+
+# Below, fill in the excel column ranges that correspond to the types of columns below
+
+
+# All meta columns that should be printed in the codebook
+META = "1:16" 
+
+# Value codes in original language
+VALUE_CODES_ORIGINAL_LANGUAGE = "20:47"
+
+# Value codes in translated language (e.g. "1 (EN)")
+VALUE_CODES_TRANSLATED_LANGUAGE = "48:75"
+
+# Missing value codes (e.g. "-99")
+MISSING_VALUE_CODES = "76:84"

@@ -6,6 +6,7 @@
 # Contains the ordered structure of the survey (blocks > questions)
 blocks = cont$result$Blocks
 
+
 # Sort blocks according to survey flow
 
 # Recursive function that goes through the flow and finds all Block IDs in the right order
@@ -81,9 +82,9 @@ questions <- Filter(function(obj) {
 }, questions)
 
 # Remove all questions without the prefix, if a prefix is used
-if (USING_QUESTION_PREFIX) {
+if (USING_WAVE_PREFIX) {
   questions <- Filter(function(obj) {
-    is.list(obj) && "DataExportTag" %in% names(obj) && grepl(paste0("^", QUESTION_PREFIX), obj$DataExportTag)
+    is.list(obj) && "DataExportTag" %in% names(obj) && grepl(paste0("^", WAVE_PREFIX), obj$DataExportTag)
   }, questions)
 }
 
@@ -196,6 +197,7 @@ for (question in questions) {
                     `Item source` = DATA_SOURCE_NAME,  # same for every row
                     `Question type` = question$QuestionType,
                     `Chapter` = DEFAULT_CHAPTER_TEXT,
+                    `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                     `Title` = DEFAULT_TITLE_TEXT) 
     
     # add variable name, i.e. the question name given in qualtrics
@@ -242,7 +244,9 @@ for (question in questions) {
       else {
         # use the default values and the corresponding translation column
         new_row[[as.character(i)]] = choice_text
-        new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        if (question_is_translated) {
+          new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+        }
       }
     }
     
@@ -266,6 +270,7 @@ for (question in questions) {
                       `Item source` = DATA_SOURCE_NAME,  # same for every row
                       `Question type` = question$QuestionType,
                       `Chapter` = DEFAULT_CHAPTER_TEXT,
+                      `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                       `Title` = DEFAULT_TITLE_TEXT) 
       
       new_row[["Variable name"]] = paste0(question$DataExportTag,"_txt")
@@ -309,6 +314,7 @@ for (question in questions) {
                       `Item source` = DATA_SOURCE_NAME,  # same for every row
                       `Question type` = question$QuestionType,
                       `Chapter` = DEFAULT_CHAPTER_TEXT,
+                      `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                       `Title` = DEFAULT_TITLE_TEXT) 
       
       # add variable name, i.e. the question name given in qualtrics
@@ -366,7 +372,9 @@ for (question in questions) {
         else {
           # use the default values and the corresponding translation column
           new_row[[as.character(i)]] = choice_text
-          new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          if (question_is_translated) {
+            new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          }
         }
       }
       
@@ -388,6 +396,7 @@ for (question in questions) {
                         `Item source` = DATA_SOURCE_NAME,  # same for every row
                         `Question type` = question$QuestionType,
                         `Chapter` = DEFAULT_CHAPTER_TEXT,
+                        `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                         `Title` = DEFAULT_TITLE_TEXT) 
         
         new_row[["Variable name"]] = paste0(question$DataExportTag,"x",counter,"_txt")
@@ -433,6 +442,7 @@ for (question in questions) {
                       `Item source` = DATA_SOURCE_NAME,  # same for every row
                       `Question type` = question$QuestionType,
                       `Chapter` = DEFAULT_CHAPTER_TEXT,
+                      `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                       `Title` = DEFAULT_TITLE_TEXT) 
       
       # add variable name, i.e. the question name given in qualtrics
@@ -483,6 +493,7 @@ for (question in questions) {
                         `Item source` = DATA_SOURCE_NAME,  # same for every row
                         `Question type` = question$QuestionType,
                         `Chapter` = DEFAULT_CHAPTER_TEXT,
+                        `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                         `Title` = DEFAULT_TITLE_TEXT) 
         
         new_row[["Variable name"]] = paste0(question$DataExportTag,"x",counter,"_txt")
@@ -526,6 +537,7 @@ for (question in questions) {
                       `Item source` = DATA_SOURCE_NAME,  # same for every row
                       `Question type` = question$QuestionType,
                       `Chapter` = DEFAULT_CHAPTER_TEXT,
+                      `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
                       `Title` = DEFAULT_TITLE_TEXT) 
       
       # add variable name, i.e. the question name given in qualtrics
@@ -573,7 +585,9 @@ for (question in questions) {
         else {
           # use the default values and the corresponding translation column
           new_row[[as.character(i)]] = choice_text
-          new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          if (question_is_translated) {
+            new_row[[paste0(i, " (", TRANSLATION_LANGUAGE_CODE,")")]] = choice_text_translated
+          }
         }
       }
       
@@ -597,24 +611,6 @@ for (question in questions) {
 # SAVE DATAFRAME TO EXCEL
 # ------------------------------------------------------------------------------
 
-#remove_html <- function(text) {
-#  text <- str_replace_all(text, "<[^>]+>", "")
-#  text <- str_replace_all(text, "&nbsp;", "")
-#  return(text)
-#}
-
-# Function to remove all html content from the dataframe
-remove_html <- function(text) {
-  if (is.na(text)) return(NA)
-  # Parse the text as HTML
-  doc <- read_html(paste0("<div>", text, "</div>"))
-  # Extract the text content, which removes the HTML tags
-  cleaned_text <- xml_text(xml_find_all(doc, ".//text()"))
-  # Join the text nodes and remove non-breaking spaces
-  cleaned_text <- paste(cleaned_text, collapse = " ")
-  cleaned_text <- gsub("&nbsp;", "", cleaned_text)
-  return(cleaned_text)
-}
 
 # apply remove_html to each column if the column is character based
 df <- data.frame(lapply(df, function(column) {
@@ -625,5 +621,11 @@ df <- data.frame(lapply(df, function(column) {
   }
 }), stringsAsFactors = FALSE, check.names = FALSE)
 
+# apply question type names to each question
+for (i in 1:nrow(df)) {
+  if ("Question type" %in% names(df) && df[i, "Question type"] %in% names(REPLACE_QUALTRIX_QUESTION_TYPES)) {
+    df[i, "Question type"] <- REPLACE_QUALTRIX_QUESTION_TYPES[[df[i, "Question type"]]]
+  }
+}
 
 write.xlsx(df, CODEBOOK_XLSX_FILENAME)
