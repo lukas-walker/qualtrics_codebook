@@ -6,7 +6,6 @@
 # Contains the ordered structure of the survey (blocks > questions)
 blocks = cont$result$Blocks
 
-
 # Sort blocks according to survey flow
 
 # Recursive function that goes through the flow and finds all Block IDs in the right order
@@ -64,6 +63,56 @@ order_indices <- match(ordered_question_ids, unordered_question_ids)
 questions = questions[order_indices]
 
 
+# ------------------------------------------------------------------------------
+# Extract Embedded Data Fields
+# ------------------------------------------------------------------------------
+
+
+collect_embedded_data_fields <- function(obj_list) {
+  result <- c()  # Initialize an empty vector to store IDs
+  
+  for (i in 1:length(obj_list)) {
+    # if we find something else than a block (either doesn't have a Type or isn't a Block)
+    # then we call this function recursively on that item
+    
+    if ("Flow" %in% names(obj_list[[i]])) {
+      result <- c(result, collect_embedded_data_fields(obj_list[[i]]$Flow))
+    }
+    
+    if ("EmbeddedData" %in% names(obj_list[[i]])) {
+      for (embeddedData in obj_list[[i]]$EmbeddedData) {
+        result <- c(result, list(embeddedData))
+      }
+    }
+  }
+  
+  return(result)
+}
+
+# Initialize an empty list to store the fields and their values
+embeddedDataFields <- list()
+
+flow = cont$result$SurveyFlow$Flow
+
+collected_fields = collect_embedded_data_fields(cont$result$SurveyFlow$Flow)
+
+# Iterate through each object in the list
+for (embeddedData in collected_fields) {
+  if ("Field" %in% names(embeddedData) && "Value" %in% names(embeddedData)) {
+    field <- embeddedData$Field
+    value <- embeddedData$Value
+  
+    # Check if the field is already in embeddedDataFields
+    if (field %in% names(embeddedDataFields)) {
+      # Append the new value to the existing list of values for this field
+      embeddedDataFields[[field]] <- c(embeddedDataFields[[field]], value)
+    } else {
+      # Initialize a new list with the value for this new field
+      embeddedDataFields[[field]] <- c(value)
+    }
+  } 
+}
+
 
 # ------------------------------------------------------------------------------
 # FILTER QUESTIONS
@@ -120,8 +169,19 @@ for (question in questions) {
   }
 }
 
+# find max number of embedded field values so there are enough value columns for them
+max_number_embedded_values = 0
+for (embeddedDataField in embeddedDataFields) {
+  if (length(embeddedDataField) > max_number_embedded_values) {
+    max_number_embedded_values = length(embeddedDataField)
+  }
+}
+
 # make a vector so it can be sorted
 codes = unlist(codes)
+
+# make sure that all numbers from 1 to max_number_embedded_values are present in codes so there is enough room for all embedded data fields
+codes = union(codes, 1:max_number_embedded_values)
 
 # Sort the elements so it's best readable
 # First: All non-negative elements in ascending order
@@ -606,6 +666,94 @@ for (question in questions) {
 
 
 
+# ------------------------------------------------------------------------------
+# ADD EMBEDDED DATA FIELDS
+# ------------------------------------------------------------------------------
+
+
+for (i in 1:length(embeddedDataFields)) {
+  new_row = list()
+  new_row[["Variable name"]] = names(embeddedDataFields[i])[1]
+  
+  for (j in 1:length(embeddedDataFields[[i]])) {
+    new_row[[as.character(j)]] = embeddedDataFields[[i]][[j]]
+  }
+    
+  new_row <- lapply(colnames(df), function(col) if (col %in% names(new_row)) new_row[[col]] else NA)
+}
+
+
+
+
+
+
+
+# ------------------------------------------------------------------------------
+# ADD EMBEDDED DATAFIELDS
+# ------------------------------------------------------------------------------
+
+for (name in names(embeddedDataFields)) {
+  new_row = list( `Dataset` = DATAFRAME_NAME, # same for every row
+                  `Item source` = DATA_SOURCE_NAME,  # same for every row
+                  `Question type` = "Embedded Data Field",
+                  `Chapter` = DEFAULT_CHAPTER_TEXT,
+                  `Subchapter` = DEFAULT_SUBCHAPTER_TEXT,
+                  `Title` = DEFAULT_TITLE_TEXT) 
+  
+  # add variable name, i.e. the question name given in qualtrics
+  new_row = append(new_row, list(`Variable name` = name))
+  
+  # add non response values
+  new_row = append(new_row, NON_RESPONSE_COLUMNS_VALUES)
+  
+  # add question text
+  new_row[["Question text"]] = "EMBEDDED DATA FIELD"
+  
+  # Ensure the new row has all columns in the dataframe, filling missing ones with NA
+  new_row <- lapply(colnames(df), function(col) if (col %in% names(new_row)) new_row[[col]] else NA)
+  names(new_row) <- colnames(df)
+  
+  
+  # Iterate over all possible values for the embedded data field and add them up to a string [value1,value2,...]
+  item_text = "["
+  for (i in 1:length(embeddedDataFields[[name]])) {
+    new_row[[as.character(i)]] = embeddedDataFields[[name]][[i]]
+    if (i == 1) {
+      item_text = paste0(item_text,"\"",embeddedDataFields[[name]][[i]],"\"")
+    } else {
+      item_text = paste0(item_text," // ","\"",embeddedDataFields[[name]][[i]],"\"")
+    }
+    
+  }
+  
+  item_text = paste0(item_text, "]")
+  
+  new_row[["Item text"]] = item_text
+      
+  # turn the row into a dataframe so we can add it to the output dataframe df
+  new_row <- as.data.frame(new_row, stringsAsFactors = FALSE, check.names = FALSE)
+  
+  # make sure all entries are treated as text for the excel
+  new_row[] <- lapply(new_row, as.character)
+  
+  # Add the new row to the dataframe
+  df <- bind_rows(df, new_row)
+  
+  # replace all references to this datafield in the df by the item_text (list of possible values)
+  reference = paste0("$\\\\{e://Field/",name,"\\\\}")
+  reference <- paste0("\\$\\{e://Field/",name,"\\}")
+  
+  columns_to_replace <- c("Question text", paste0("Question text (",TRANSLATION_LANGUAGE_CODE,")"), "Item text", paste0("Item text (",TRANSLATION_LANGUAGE_CODE,")"))
+  
+  # Replace the substring "_pie" with "_dessert" in the specified columns
+  df[columns_to_replace] <- lapply(df[columns_to_replace], function(x) gsub(reference, item_text, x))
+}
+
+
+
+
+
+
 
 # ------------------------------------------------------------------------------
 # SAVE DATAFRAME TO EXCEL
@@ -629,3 +777,4 @@ for (i in 1:nrow(df)) {
 }
 
 write.xlsx(df, CODEBOOK_XLSX_FILENAME)
+
