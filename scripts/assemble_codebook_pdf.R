@@ -16,7 +16,7 @@ if ("Subchapter" %in% names(df_meta)) {
   uses_subchapters = FALSE
 }
 
-default_comments = "The code scheme for missing valules can be found on page \\pageref{missingcodes}."
+default_comments = "The code scheme for missing values can be found on page \\pageref{missingcodes}."
 
 # iterate through all rows until the end of the metadata dataframe
 # prints all pages for each question
