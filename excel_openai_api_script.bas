@@ -1,4 +1,3 @@
-Attribute VB_Name = "Module1"
 Function AIAssistant(cell As Range) As String
   
   Dim request As Object

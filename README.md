@@ -77,5 +77,5 @@ This only uses the API on this row if E9 has "x" as its value. Otherwise it just
 
 ### ATTENTION
 
-- if you change and save the script, all functions will access the API again --> cost!
+- if you change and save the VBA script, all functions will access the API again --> cost!
 - If you apply the function to multiple rows, it can take a while. The excel will not react. It is best to only to this in batches (instead of applying it to thousands of rows at the same time).
