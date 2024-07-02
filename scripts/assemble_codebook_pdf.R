@@ -52,7 +52,7 @@ while (current_row <= nrow(df_meta)) {
   }
   
   # HANDLE SPECIAL CASES (where there is no question number)
-  if (is.na(question_number) || TRUE) {
+  if (is.na(question_number)) {
     if (is.na(df_meta[current_row, ]$`Title`)
         || 
         df_meta[current_row, ]$`Title` == " ") {
