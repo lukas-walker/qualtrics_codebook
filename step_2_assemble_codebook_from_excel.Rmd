@@ -116,7 +116,7 @@ if (FONT != "") {
 }
 
 # This is the output name for the excel file
-CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME")
+CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME_STEP_2")
 
 WAVE_PREFIX = Sys.getenv("WAVE_PREFIX")
 
