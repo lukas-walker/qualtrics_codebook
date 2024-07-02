@@ -591,7 +591,7 @@ for (question in questions) {
   
   
   else if (question$QuestionType == "RO") {
-    for (ranking_number in 1:length(question$Choices)) {
+    for (ranking_number in 1:3) {
       # fill the row
       new_row = list( `Dataset` = DATAFRAME_NAME, # same for every row
                       `Item source` = DATA_SOURCE_NAME,  # same for every row
@@ -602,7 +602,7 @@ for (question in questions) {
       
       # add variable name, i.e. the question name given in qualtrics
       # add a suffix x1, x2, ... to the Variable Name
-      new_row[["Variable name"]] = paste0(question$DataExportTag,"_ranking_",ranking_number)
+      new_row[["Variable name"]] = paste0(question$DataExportTag,"x",ranking_number)
       
       # figure out if this question has associated Display Logic
       new_row[["hasDisplayLogic"]] = ("DisplayLogic" %in% names(question)) 
