@@ -44,7 +44,7 @@ readRenviron("./.Renviron")
 # CUSTOM VARIABLES AND PATHS
 
 # This is the output name for the excel file
-CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME")
+CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME_STEP_1")
 
 # This is the name that the data set has in the end (e.g. panelX_wave1)
 # (this should be computer readable)

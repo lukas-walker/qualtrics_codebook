@@ -4,7 +4,10 @@ SURVEY_ID=""
 ORIGINAL_LANGUAGE_CODE="DE"
 TRANSLATED_LANGUAGE_CODE="EN"
 
-CODEBOOK_XLSX_FILENAME="codebook_data.xlsx"
+# the output excel file name for step 1
+CODEBOOK_XLSX_FILENAME_STEP_1="codebook_data.xlsx"
+# the input excel file name for step 2 (can be the same, but don't have to be. Sometimes you want to rebuild the the file without losing your changes
+CODEBOOK_XLSX_FILENAME_STEP_2="codebook_data_final.xlsx"
 
 # Leave empty if you want to use the default
 FONT=""

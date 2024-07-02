@@ -715,18 +715,19 @@ for (name in names(embeddedDataFields)) {
   
   
   # Iterate over all possible values for the embedded data field and add them up to a string [value1,value2,...]
-  item_text = "["
+  item_text = "{"
+  
   for (i in 1:length(embeddedDataFields[[name]])) {
     new_row[[as.character(i)]] = embeddedDataFields[[name]][[i]]
     if (i == 1) {
-      item_text = paste0(item_text,"\"",embeddedDataFields[[name]][[i]],"\"")
+      item_text = paste0(item_text,"[",embeddedDataFields[[name]][[i]],"]")
     } else {
-      item_text = paste0(item_text," // ","\"",embeddedDataFields[[name]][[i]],"\"")
+      item_text = paste0(item_text," // [",embeddedDataFields[[name]][[i]],"]")
     }
     
   }
   
-  item_text = paste0(item_text, "]")
+  item_text = paste0(item_text, "}")
   
   new_row[["Item text"]] = item_text
       
