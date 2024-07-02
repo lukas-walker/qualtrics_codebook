@@ -2,23 +2,24 @@
 
 ## Manual
 
-1. Adapt variables in first part of get_metadata_from_qualtrics_to_excel.R
-2. Use get_metadata_from_qualtrics_to_excel.R to create an excel with all codebook data
-3. Adapt excel file to suit your needs
-4. Adapt frontpage.tex
-5. Adapt variables in first part of assemble_codebook_from_excel.Rmd
-6. knit pdf with assemble_codebook_from_excel.Rmd
+1. Make a copy the file .Renviron_Template and name it .Renviron (Files that start on a "." are hidden files. You might have to change your folder view settings to be able to see them.)
+2. Edit the variables within the .Renviron file
+3. Run the script ```step_1_get_metadata_from_qualtrics_to_excel.R```, which creates an excel with all codebook data
+5. Adapt excel file to suit your needs
+6. Adapt frontpage.tex to suit your needs
+7. Adapt the file ```step_2_assemble_codebook_from_excel.Rmd``` (e.g. some texts that you want to add)
+8. Run the ```step_2_assemble_codebook_from_excel.Rmd``` file and enjoy your codebook!
 
 ## More detailed:
 
-### Git
+### Install git
 
 https://git-scm.com/book/de/v2/Erste-Schritte-Git-installieren
  
-### Clone git repository
+### Clone this git repository
 
 - Start cmd (Windows key, type “cmd”, start)
-- Go to working directory
+- Go to the directory where you want your codebook to be built. The following commands help you:
 - ```cd Folder``` goes to folder “Folder”
 - ```cd ..``` jumps to parent folder
 
@@ -26,17 +27,12 @@ https://git-scm.com/book/de/v2/Erste-Schritte-Git-installieren
 - This command copies the full repository into the new folder ```FolderName```
 
 ### Fill in .Renviron file
-- ```API_KEY=""```
-- ```SURVEY_ID=""```
-- ```SHARE=""```
-- ```WORKING_DIRECTORY=""```
-- ```LANGUAGE_CODE=""```
+- The lines that start with # are comments and tell you what value you should put
 
-### get_metadata_from_qualtrics_to_excel.R
-- Go through first part of the file and adapt everything that needs to be adapted. The comments will guide you. 
-- Run the file
+### Run ```step_1_get_metadata_from_qualtrics_to_excel.R```
+- If the .Renviron file was filled in correctly, this file should run without any problems
 
-### Update the Excel that was created
+### Update the Excel file that was created
 - Edit Chapters and titles
 - Reorganize variables according to your needs
 - Delete empty columns that might appear
@@ -44,36 +40,44 @@ https://git-scm.com/book/de/v2/Erste-Schritte-Git-installieren
 ### Adapt frontpage.tex
 
 ### assemble_codebook_from_excel.Rmd
-- Install all fonts if you didn't already (see .fonts folder)
+- Install all fonts if you don't already have installed locally (see .fonts folder)
 - Knit this R markdown to PDF
-
+- done!
 
 ## Generate Titles with ChatGPT
 
-### import script 
+### Open the Excel with Macros-enabled file OpenAI_Excel.xlsm and import the ```excel_openai_api_script.bas``` script
 
 Import the excel_openai_api_script.bas file into your excel file. Here's how to do that: https://support.tetcos.com/support/solutions/articles/14000143233-how-to-import-vba-script-bas-file-in-ms-excel-
 
 Or click Alt + F11 to open the Visual Basic editor, choose Insert > Module and copy the script code. 
 
-### Add your OpenAI API Key
+This script contains a User Defined Function (UDF) ```=AIAssistant()``` that calls the OpenAI API. It takes as input one cell that should contain a question and gives as output a title. 
+
+### Add your OpenAI API Key to the script
 
 Go to https://platform.openai.com/ and create an account. You will have to provide payment information to do this (the API withdraws money per token used from your account. THIS CAN GET COSTLY. USE WITH CARE.)
 
-Go to the API Keys menu and create a new API key. Copy this string into the VBA script in Excel. Save the script.
+Go to the API Keys menu and create a new API key. Copy this string into the VBA script in Excel into the variable ```api_key``` Save the script.
 
-### Use the new AIAssistant function in Excel
+### Copy the questions column from your metadata excel file to the OpenAI_Excel.xlsm.
 
-The script gives you a new function. It takes one cell as input. This cell should contain the question for which you want to generate your title. 
+Make sure you do all of the following in one step in order not to shift any rows. 
 
-Example: ``` =AIAssistant(A9) ```
+
+### Use the ```AIAssistant()``` function to generate titles in the column next to it.
+
+The Macro-enabled Excel file already contains a template function. Below is an explanation of how it works.
 
 If you only want to apply this function to some rows that have some condition, you can do the following:
 
-``` =IF(E9="x",AIAssistant(A9),"") ```
+``` =IF(R[-1]="x",AIAssistant(R[-2]),"") ``` (only uses ChatGPT if there is an "x" in the column to the left and prints "" if there is no "x")
 
-This only uses the API on this row if E9 has "x" as its value. Otherwise it just prints "". You could also put the cell above instead of "" so it just copypastes whatever is above it. 
+If you only want to apply the function to rows that have a new question (instead of a question that is equal to the previous row), you can do the following:
 
+``` =IF(AND(R[-1]C[-1]=RC[-1]), R[-1]C, AIAssistant(RC[-1])) ``` 
+
+This prints the same value as the row above if the two questions to the left are equal (in that case you really don't need to run the function twice, you can just copy the same title from above)
 
 ### ATTENTION
 
