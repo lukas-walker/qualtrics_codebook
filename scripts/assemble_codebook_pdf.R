@@ -65,7 +65,11 @@ while (current_row <= nrow(df_meta)) {
     if (uses_subchapters) {
       cat("#")
     }
-    cb_pages(metadata = df_meta, multi.var = c(current_row), comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments))
+    cb_pages(metadata = df_meta, 
+               multi.var = c(current_row), 
+             comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments),
+             response = if(exists("response")) response else NULL,
+             add_sumplots = if(exists("add_sumplots")) add_sumplots else NULL)
     
     # go to next question
     current_row = current_row + 1
@@ -147,7 +151,11 @@ while (current_row <= nrow(df_meta)) {
       }
       
       
-      cb_pages(metadata = df_meta, multi.var = c(current_row), comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments))
+      cb_pages(metadata = df_meta, 
+               multi.var = c(current_row), 
+               comment = paste0(if (!is.na(df_meta[current_row, ]$`Comment`)) df_meta[current_row, ]$`Comment` else "","\n",default_comments),
+               response = if(exists("response")) response else NULL,
+               add_sumplots = if(exists("add_sumplots")) add_sumplots else NULL)
     }
     
     # go to next question

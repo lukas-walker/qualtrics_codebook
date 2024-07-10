@@ -14,8 +14,8 @@ header-includes:
 - \fancyhf{}
 - \fancyhead[C]{\nouppercase{\leftmark}}
 - \fancyfoot[C]{\thepage}
-- \fancyhead[L]{\includegraphics[height=5mm]{img/logo1}}
-- \fancyhead[R]{\includegraphics[height=5mm]{img/logo2.png}}
+- \fancyhead[L]{\includegraphics[height=5mm]{img/logo_eth.png}}
+- \fancyhead[R]{\includegraphics[height=5mm]{img/logo_sup-bw.png}}
 - \renewcommand{\headrulewidth}{0.3pt}
 - \setlength{\headsep}{0.6in} 
 output:
@@ -132,9 +132,18 @@ codes_translated_language = eval(parse(text = Sys.getenv("VALUE_CODES_TRANSLATED
 # Missing labels
 miscodes = eval(parse(text = Sys.getenv("MISSING_VALUE_CODES")))
 
+# load language codes from environment file
 ORIGINAL_LANGUAGE_CODE = Sys.getenv("ORIGINAL_LANGUAGE_CODE")
 TRANSLATED_LANGUAGE_CODE = Sys.getenv("TRANSLATED_LANGUAGE_CODE")
 languages <- c(ORIGINAL_LANGUAGE_CODE, TRANSLATED_LANGUAGE_CODE)
+
+# load response data file if add sumplots is TRUE
+add_sumplots = eval(parse(text = Sys.getenv("ADD_SUMPLOTS")))
+if (add_sumplots) {
+  load(file = Sys.getenv("RESPONSE_FILE"))
+  response = eval(parse(text = Sys.getenv("RESPONSE_DATAFRAME_NAME")))
+}
+
 
 
 ```
@@ -161,8 +170,6 @@ df_meta <- data.frame(lapply(df_meta, function(column) {
 
 # Labelling Scheme 
 
-FILL IN LABELING SCHEME
-
 # Missing Code Scheme
 If applicable, missing values are coded as follows: 
 
@@ -179,9 +186,21 @@ cat("\\label{missingcodes}")
 cb_mistable(metadata = df_meta)
 ```
 
+# Presentation of randomisation
+This wave included survey experiments. Randomly defined groups received different treatments in form of information and question texts. The treatment variables display the exact information and question texts for each group. If the treatment concerns the question text of a variable, the different versions will be presented along with the corresponding variable. The following scheme is used to present the different treatments (see [Question 40](#q40) as an example): 
+
++ {...} indicates all treatment values belonging to one treatment variable, 
++ [...] indicates one treatment value within a treatment variable,
++ // delimits the different treatment values and can be interpreted as an exclusive OR.
+
+Example: {[] // [state] // [company] // [Individuum]}
+
+The control group often receives no information or a shortened question text (without additional information). The absence of an information or text is indicated with an empty field. Control group information are either recorded by a general treatment group variable or a specific treatment variable referring to the information/text. In the latter case, [ ] is used to refer to the (empty) control group value. Otherwise, { } indicates the (empty) control group value.  
+
 # Question Types 
 
-FILL IN QUESTION TYPES IF NECESSARY
+The given question types explain the way respondents were allowed to answer a specific question. This is, either selecting a limited (single choice) or open (multiple choice) number of response options from a given list, inserting text or numeric values in open text boxes, or showing one’s opinion via rating on a predefined continuum. The question type meta data does not result from respondents' answers, but records basic information on individual survey rounds and respondents.
+
 
 \newpage
 
