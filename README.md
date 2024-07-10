@@ -27,6 +27,8 @@ https://git-scm.com/book/de/v2/Erste-Schritte-Git-installieren
 - This command copies the full repository into the new folder ```FolderName```
 
 ### Fill in .Renviron file
+- Copy the file .Renviron_Template file and name it .Renviron
+- Files that start with a . are "hidden files". If you don't see it, you probably have to change your setting to see hidden files
 - The lines that start with # are comments and tell you what value you should put
 
 ### Run ```step_1_get_metadata_from_qualtrics_to_excel.R```
