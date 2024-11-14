@@ -14,8 +14,8 @@ header-includes:
 - \fancyhf{}
 - \fancyhead[C]{\nouppercase{\leftmark}}
 - \fancyfoot[C]{\thepage}
-- \fancyhead[L]{\includegraphics[height=5mm]{img/logo_eth.png}}
-- \fancyhead[R]{\includegraphics[height=5mm]{img/logo_sup-bw.png}}
+- \fancyhead[L]{\includegraphics[height=5mm]{img/logo1.png}}
+- \fancyhead[R]{\includegraphics[height=5mm]{img/logo1.png}}
 - \renewcommand{\headrulewidth}{0.3pt}
 - \setlength{\headsep}{0.6in} 
 output:

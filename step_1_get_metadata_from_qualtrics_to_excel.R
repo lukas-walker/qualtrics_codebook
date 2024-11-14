@@ -48,10 +48,10 @@ CODEBOOK_XLSX_FILENAME <- Sys.getenv("CODEBOOK_XLSX_FILENAME_STEP_1")
 
 # This is the name that the data set has in the end (e.g. panelX_wave1)
 # (this should be computer readable)
-DATAFRAME_NAME = "dataframe_name" 
+DATAFRAME_NAME = Sys.getenv("DATAFRAME_NAME")
 
 # This is the human readable name for the data set (i.e. the title)
-DATA_SOURCE_NAME = "Data Source Name"
+DATA_SOURCE_NAME = Sys.getenv("DATA_SOURCE_NAME")
 
 # This script expects all relevant questions to have a prefix (e.g. wave1_question1)
 # This is used to only select actual questions and remove e.g. intro texts, timers etc. 

@@ -93,11 +93,11 @@ while (current_row <= nrow(df_meta)) {
     
     # if it's just an intro text, just print the german and english version
     if (any(grepl(paste0("^.+_intro$"), row_identifier))) {
-      cat("DE: ")
+      cat(paste0(ORIGINAL_LANGUAGE_CODE,": "))
       cat(df_meta[current_row, ]$`Question text`)
       cat("\n\n")
-      cat("EN: ")
-      cat(df_meta[current_row, ]$`Question text (EN)`)
+      cat(paste0(TRANSLATED_LANGUAGE_CODE,": "))
+      cat(df_meta[current_row, ][paste0("Question text (",TRANSLATED_LANGUAGE_CODE,")")])
       cat("\n\n")
       
       # go to next question
@@ -128,10 +128,10 @@ while (current_row <= nrow(df_meta)) {
         # all without -8
         for (i in 0:(n-2)) {
           df_meta[current_row+i,]$`Item text` = df_meta[[current_row+i,codes_de[2]+i]] # value for 1 to last posittive german labels
-          df_meta[current_row+i,]$`Item text (EN)` = df_meta[[current_row+i,codes_en[2]+i]] # value for 1 to last posittive english labels
+          df_meta[current_row+i,] = df_meta[[current_row+i,codes_en[2]+i]] # value for 1 to last posittive english labels
         }
         df_meta[current_row+n-1,]$`Item text` = df_meta[[current_row+i,codes_de[length(codes_de)-1]]] # value for -8
-        df_meta[current_row+n-1,]$`Item text (EN)` = df_meta[[current_row+i,codes_en[length(codes_en)-1]]] # value for -8
+        df_meta[current_row+n-1,][paste0("Item text (",TRANSLATED_LANGUAGE_CODE,")")] = df_meta[[current_row+i,codes_en[length(codes_en)-1]]] # value for -8
         
         for (i in 0:(n-1)) {
           for (j in codes_de) {

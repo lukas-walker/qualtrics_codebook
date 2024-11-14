@@ -4,14 +4,24 @@ SURVEY_ID=""
 ORIGINAL_LANGUAGE_CODE="DE"
 TRANSLATED_LANGUAGE_CODE="EN"
 
+# STEP 1
+
 # the output excel file name for step 1
 CODEBOOK_XLSX_FILENAME_STEP_1="codebook_data.xlsx"
-# the input excel file name for step 2 (can be the same, but don't have to be. Sometimes you want to rebuild the the file without losing your changes
+# the input excel file name for step 2 (can be the same, but doesn't have to be. Sometimes you want to rebuild the the file without losing your changes
 CODEBOOK_XLSX_FILENAME_STEP_2="codebook_data_final.xlsx"
 
-# the file for responses that contain the actual data, so sumplots can be added to the document
+# This is the name that the data set has in the end (e.g. panelX_wave1)
+# (this should be computer readable)
+DATAFRAME_NAME = "dataframe_name" 
+
+# This is the human readable name for the data set (i.e. the title)
+DATA_SOURCE_NAME = "Data Source Name"
+
+
+# the file for responses that contain the actual data, so sumplots can be added to the document (Only for sumplots)
 RESPONSE_FILE=""
-# the name of the dataframe that is contained in the RData file above that should be treated as the response dataframe
+# the name of the dataframe that is contained in the RData file above that should be treated as the response dataframe (Only for sumplots)
 RESPONSE_DATAFRAME_NAME=""
 ADD_SUMPLOTS=FALSE
 
@@ -19,11 +29,12 @@ ADD_SUMPLOTS=FALSE
 FONT=""
 
 # Leave empty if you don't use wave prefixes in your survey (e.g. "w1_" for each question)
-WAVE_PREFIX=""
+WAVE_PREFIX="w14_"
 
 
 # Below, fill in the excel column ranges that correspond to the types of columns below
 
+# STEP 2
 
 # All meta columns that should be printed in the codebook
 META = "1:16" 
